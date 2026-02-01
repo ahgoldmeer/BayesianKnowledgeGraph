@@ -6,14 +6,18 @@ import webbrowser
 from Neo4j import Neo4jConnection
 
 class BayesianKG:
-    def __init__(self, prior_strength = 0.5, evidence_scale = 3.0):
+    def __init__(self, prior_strength = 0.5, max_scale = 6.0):
         # Prior_Strength = how strong the belief WAS
         self.edge_beliefs = {} #subj-pred-obj --> (a,b)
         self.node_reliability = defaultdict(lambda: (prior_strength, prior_strength)) #node --> (a,b)
         self.predicate_priors = defaultdict(lambda: (prior_strength, prior_strength))  # NEW: pred --> (a,b)
         self.prior_strength = prior_strength
-        self.evidence_scale = evidence_scale
-        
+        self.max_scale = max_scale
+
+    def get_evidence_scale(self, node_weight): # No static amplifier --> Dynamic amplification with max change resistance
+        scale = (self.max_scale * node_weight)/(1 + node_weight)
+        return scale
+
     def get_reliability(self, node):
         alpha, beta = self.node_reliability[node]
         return alpha / (alpha + beta)
@@ -26,11 +30,6 @@ class BayesianKG:
     
     def get_node_reliability(self, node):
         return self.get_reliability(node)
-    
-    # def get_predicate_prior(self, pred):  # NEW METHOD
-    #     """Get the learned prior for this predicate type"""
-    #     alpha, beta = self.predicate_priors[pred]
-    #     return alpha / (alpha + beta)
     
     def update_predicate_prior(self, pred, confidence):  # NEW METHOD
         """Update predicate-level statistics"""
@@ -62,8 +61,6 @@ class BayesianKG:
         obj_reliability = self.get_reliability(obj)
         node_weight = (subj_reliability + obj_reliability)/2
 
-        # NEW: Get predicate prior (learned from similar relationships)
-        # pred_prior = self.get_predicate_prior(pred)
 
         # Add edge to KG if not already there
         if edge_key not in self.edge_beliefs:
@@ -72,14 +69,8 @@ class BayesianKG:
             self.edge_beliefs[edge_key] = (pred_alpha, pred_beta) # set default alpha/beta before overwrite
 
         alpha, beta = self.edge_beliefs[edge_key]
-        # alpha += confidence
-        # beta += (1 - confidence)
-
-        # weighted_conf = confidence * node_weight
-        # alpha += weighted_conf
-        # beta += (1 - weighted_conf)
         
-        evidence_strength = node_weight * self.evidence_scale
+        evidence_strength = self.get_evidence_scale(node_weight) # Call for dynamic scaling instead of static 3x
         alpha += confidence * evidence_strength
         beta += (1 - confidence) * evidence_strength
 
