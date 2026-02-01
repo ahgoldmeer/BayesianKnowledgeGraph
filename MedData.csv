@@ -1,0 +1,92 @@
+Subject,Predicate,Object,Confidence
+Fever,is_symptom_of,Influenza,0.78
+Cough,is_symptom_of,Influenza,0.72
+Fatigue,is_symptom_of,Influenza,0.83
+Influenza,treated_with,Oseltamivir,0.93
+Body Aches,is_symptom_of,Influenza,0.69
+Shortness of Breath,is_symptom_of,Pneumonia,0.88
+Chest Pain,is_symptom_of,Pneumonia,0.47
+Fever,is_symptom_of,Pneumonia,0.76
+Pneumonia,treated_with,Antibiotics,0.91
+Pneumonia,caused_by,Bacterial Infection,0.82
+Headache,is_symptom_of,Migraine,0.89
+Nausea,is_symptom_of,Migraine,0.41
+Light Sensitivity,is_symptom_of,Migraine,0.67
+Migraine,treated_with,Triptans,0.92
+Fatigue,is_symptom_of,Anemia,0.54
+Pale Skin,is_symptom_of,Anemia,0.36
+Dizziness,is_symptom_of,Anemia,0.43
+Anemia,caused_by,Iron Deficiency,0.87
+Anemia,treated_with,Iron Supplements,0.95
+Joint Pain,is_symptom_of,Rheumatoid Arthritis,0.81
+Swelling,is_symptom_of,Rheumatoid Arthritis,0.74
+Stiffness,is_symptom_of,Rheumatoid Arthritis,0.69
+Rheumatoid Arthritis,treated_with,NSAIDs,0.58
+Rheumatoid Arthritis,treated_with,DMARDs,0.90
+Fever,is_symptom_of,COVID-19,0.84
+Cough,is_symptom_of,COVID-19,0.79
+Fatigue,is_symptom_of,COVID-19,0.66
+Loss of Smell,is_symptom_of,COVID-19,0.93
+COVID-19,treated_with,Nirmatrelvir,0.88
+COVID-19,caused_by,Viral Infection,0.95
+Sore Throat,is_symptom_of,Strep Throat,0.68
+Fever,is_symptom_of,Strep Throat,0.74
+Strep Throat,treated_with,Penicillin,0.92
+Strep Throat,caused_by,Bacterial Infection,0.83
+Sneezing,is_symptom_of,Seasonal Allergies,0.71
+Itchy Eyes,is_symptom_of,Seasonal Allergies,0.32
+Runny Nose,is_symptom_of,Seasonal Allergies,0.77
+Seasonal Allergies,treated_with,Antihistamines,0.89
+Wheezing,is_symptom_of,Asthma,0.85
+Shortness of Breath,is_symptom_of,Asthma,0.92
+Asthma,treated_with,Inhaled Corticosteroids,0.94
+Chest Tightness,is_symptom_of,Asthma,0.73
+Nausea,is_symptom_of,Food Poisoning,0.44
+Vomiting,is_symptom_of,Food Poisoning,0.82
+Abdominal Pain,is_symptom_of,Food Poisoning,0.79
+Food Poisoning,caused_by,Bacterial Contamination,0.50
+Food Poisoning,treated_with,Fluid Replacement,0.91
+Headache,is_symptom_of,Dehydration,0.48
+Dark Urine,is_symptom_of,Dehydration,0.34
+Dehydration,treated_with,Oral Rehydration Salts,0.90
+Fatigue,is_symptom_of,Chronic Fatigue Syndrome,0.72
+Muscle Pain,is_symptom_of,Chronic Fatigue Syndrome,0.63
+Poor Sleep,is_symptom_of,Chronic Fatigue Syndrome,0.56
+Chronic Fatigue Syndrome,treated_with,CBT Therapy,0.71
+High Blood Pressure,is_symptom_of,Hypertension,0.83
+Headache,is_symptom_of,Hypertension,0.51
+Hypertension,treated_with,ACE Inhibitors,0.93
+Hypertension,caused_by,Stress,0.58
+Chest Pain,is_symptom_of,Heart Disease,0.79
+Shortness of Breath,is_symptom_of,Heart Disease,0.69
+Heart Disease,treated_with,Beta Blockers,0.92
+Rash,is_symptom_of,Lyme Disease,0.68
+Fatigue,is_symptom_of,Lyme Disease,0.59
+Joint Pain,is_symptom_of,Lyme Disease,0.74
+Lyme Disease,caused_by,Tick Bite,0.95
+Lyme Disease,treated_with,Doxycycline,0.91
+Abdominal Pain,is_symptom_of,IBS,0.61
+Bloating,is_symptom_of,IBS,0.49
+IBS,treated_with,Low FODMAP Diet,0.85
+Cough,is_symptom_of,Bronchitis,0.77
+Chest Tightness,is_symptom_of,Bronchitis,0.48
+Bronchitis,caused_by,Viral Infection,0.63
+Bronchitis,treated_with,Cough Suppressants,0.72
+Kidney Pain,is_symptom_of,Chronic Kidney Disease,0.74
+Fatigue,is_symptom_of,Chronic Kidney Disease,0.57
+Chronic Kidney Disease,treated_with,Dialysis,0.94
+Nausea,is_symptom_of,Ulcer,0.36
+Stomach Burning,is_symptom_of,Ulcer,0.83
+Ulcer,caused_by,H. Pylori Infection,0.92
+Ulcer,treated_with,Proton Pump Inhibitors,0.89
+Runny Nose,is_symptom_of,Common Cold,0.73
+Sneezing,is_symptom_of,Common Cold,0.69
+Cough,is_symptom_of,Common Cold,0.75
+Common Cold,treated_with,Rest,0.84
+Fatigue,is_symptom_of,Mononucleosis,0.81
+Sore Throat,is_symptom_of,Mononucleosis,0.75
+Swollen Lymph Nodes,is_symptom_of,Mononucleosis,0.78
+Mononucleosis,treated_with,Fluids,0.86
+Wheezing,is_symptom_of,Air Pollution Exposure,0.42
+Cough,is_symptom_of,Air Pollution Exposure,0.39
+Air Pollution Exposure,caused_by,Environmental Factors,0.72
