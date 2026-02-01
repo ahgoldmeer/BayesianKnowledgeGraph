@@ -1,13 +1,17 @@
+from pathlib import Path
 from Bayesian_KG import BayesianKG, node_color_from_conf, color_to_confidence, rgb_string_to_hex
 from Neo4j import Neo4jConnection
 import pandas as pd
+from pathlib import Path
 
 def main():
 
     bkg = BayesianKG(prior_strength=0.5, evidence_scale=3.0)
     neo4j = Neo4jConnection(uri="neo4j://127.0.0.1:7687", user="neo4j", password="password")
 
-    df = pd.read_csv('MedData.csv')
+    BASE_DIR = Path(__file__).resolve().parent      # MAIN/project
+    csv_path = BASE_DIR.parent / "data" / "MedData.csv"  # MAIN/data/csv
+    df = pd.read_csv(csv_path)
 
     for step, row in enumerate(df.itertuples(index=False)):
         subj = row.Subject
