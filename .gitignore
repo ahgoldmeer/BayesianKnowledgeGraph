@@ -1,1 +1,3 @@
 project/__pycache__/
+data/edges.csv
+data/nodes.csv

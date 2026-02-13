@@ -45,14 +45,14 @@ def main():
             "alpha": edge_alpha,
             "beta": edge_beta,
             "confidence": bayes_conf,
-            "original_confidence": conf,  # Add original confidence to CSV
+            "original_confidence": conf,
             "uncertainty": uncertainty,
             "color": rgb_string_to_hex(color_to_confidence(bayes_conf)),
             "step": step
         })
 
     # Convert lists to DataFrames
-    nodes_df = pd.DataFrame(node_rows).drop_duplicates(subset=["name"])
+    nodes_df = pd.DataFrame(node_rows).drop_duplicates(subset=["name"], keep="last")  # Ensure unique nodes
     edges_df = pd.DataFrame(edge_rows)
 
     # Save CSVs
