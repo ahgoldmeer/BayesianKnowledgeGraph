@@ -14,8 +14,8 @@ class BayesianKG:
         self.prior_strength = prior_strength
         self.max_scale = max_scale
 
-    '''Evidence scale is a hyperparameter that determines how much a belief should shift given new observations.'''
     def get_evidence_scale(self, node_weight): # No static amplifier --> Dynamic amplification with max change resistance
+        """Evidence scale is a hyperparameter that determines how much a belief should shift given new observations."""
         scale = (self.max_scale * node_weight)/(1 + node_weight)
         return scale
 
