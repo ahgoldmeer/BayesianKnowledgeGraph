@@ -6,7 +6,7 @@ from pathlib import Path
 
 def main():
 
-    bkg = BayesianKG(prior_strength=0.5, evidence_scale=3.0)
+    bkg = BayesianKG(prior_strength=0.5, max_scale=6.0)
     neo4j = Neo4jConnection(uri="neo4j://127.0.0.1:7687", user="neo4j", password="password")
 
     BASE_DIR = Path(__file__).resolve().parent      # MAIN/project
