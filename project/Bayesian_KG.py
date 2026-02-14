@@ -93,6 +93,12 @@ class BayesianKG:
     This allows new evidence to influence related edges, with diminishing impact as we go further out.
 
     Infer confidence for neighbor edges based on existing beliefs
+
+    'The recursive propagation in propagate_edge can create infinite loops if the graph contains cycles. 
+    While max_depth provides some protection, a cycle of length less than max_depth (default 5) will still 
+    cause the same edge to be updated multiple times in a single propagation. Consider tracking visited edges 
+    during a propagation to prevent revisiting the same edge in a single call chain.'
+    
     '''
     def propagate_edge(self, subj, pred, obj, confidence, depth=0):
         if depth >= self.max_depth:
