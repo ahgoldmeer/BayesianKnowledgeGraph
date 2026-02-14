@@ -104,9 +104,9 @@ class BayesianKG:
         # Recursively propagate to connected edges via object neighbors
         for neighbor_pred, neighbor_obj in self.graph_outgoing[obj]:  # Propagate from obj to its outgoing edges
             # infer confidence for neighbor edge
-            confidence = self.infer_confidene(obj, neighbor_obj)
+            inferred_confidence = self.infer_confidene(obj, neighbor_obj)
             # recursive propagation with inferred confidence
-            self.propagate_edge(obj, neighbor_pred, neighbor_obj, confidence, depth + 1)
+            self.propagate_edge(obj, neighbor_pred, neighbor_obj, inferred_confidence, depth + 1)
 
     def infer_confidene(self, subj, obj):
         confidences = []
