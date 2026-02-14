@@ -6,14 +6,22 @@ import webbrowser
 from Neo4j import Neo4jConnection
 
 class BayesianKG:
-    def __init__(self, prior_strength = 0.5, evidence_scale = 3.0):
+    def __init__(self, prior_strength = 0.5, max_scale = 6.0, gamma = 0.7, max_depth = 5):
         # Prior_Strength = how strong the belief WAS
         self.edge_beliefs = {} #subj-pred-obj --> (a,b)
         self.node_reliability = defaultdict(lambda: (prior_strength, prior_strength)) #node --> (a,b)
         self.predicate_priors = defaultdict(lambda: (prior_strength, prior_strength))  # NEW: pred --> (a,b)
         self.prior_strength = prior_strength
-        self.evidence_scale = evidence_scale
-        
+        self.max_scale = max_scale
+        self.gamma = gamma
+        self.max_depth = max_depth
+        self.graph_outgoing = defaultdict(list) # For recursive updates: subj --> [(pred, obj)]
+
+    def get_evidence_scale(self, node_weight): # No static amplifier --> Dynamic amplification with max change resistance
+        """Evidence scale is a hyperparameter that determines how much a belief should shift given new observations."""
+        scale = (self.max_scale * node_weight)/(1 + node_weight)
+        return scale
+
     def get_reliability(self, node):
         alpha, beta = self.node_reliability[node]
         return alpha / (alpha + beta)
@@ -26,11 +34,6 @@ class BayesianKG:
     
     def get_node_reliability(self, node):
         return self.get_reliability(node)
-    
-    # def get_predicate_prior(self, pred):  # NEW METHOD
-    #     """Get the learned prior for this predicate type"""
-    #     alpha, beta = self.predicate_priors[pred]
-    #     return alpha / (alpha + beta)
     
     def update_predicate_prior(self, pred, confidence):  # NEW METHOD
         """Update predicate-level statistics"""
@@ -54,7 +57,7 @@ class BayesianKG:
         n = alpha + beta
         return (alpha * beta) / (n * n * (n+1))
 
-    def add_observation(self, subj, pred, obj, confidence):
+    def add_observation(self, subj, pred, obj, confidence, depth = 0):
         edge_key = (subj, pred, obj)
 
         # Add node confidence as weight
@@ -62,24 +65,18 @@ class BayesianKG:
         obj_reliability = self.get_reliability(obj)
         node_weight = (subj_reliability + obj_reliability)/2
 
-        # NEW: Get predicate prior (learned from similar relationships)
-        # pred_prior = self.get_predicate_prior(pred)
-
         # Add edge to KG if not already there
         if edge_key not in self.edge_beliefs:
             # NEW: Initialize with predicate prior instead of generic prior
             pred_alpha, pred_beta = self.predicate_priors[pred]
             self.edge_beliefs[edge_key] = (pred_alpha, pred_beta) # set default alpha/beta before overwrite
+            self.graph_outgoing[subj].append((pred, obj)) # Track outgoing edges for recursive updates
 
         alpha, beta = self.edge_beliefs[edge_key]
-        # alpha += confidence
-        # beta += (1 - confidence)
 
-        # weighted_conf = confidence * node_weight
-        # alpha += weighted_conf
-        # beta += (1 - weighted_conf)
+        decay = self.gamma ** depth # decay = decay factor ^ depth
+        evidence_strength = self.get_evidence_scale(node_weight) * decay # Call for dynamic scaling instead of static 3x
         
-        evidence_strength = node_weight * self.evidence_scale
         alpha += confidence * evidence_strength
         beta += (1 - confidence) * evidence_strength
 
@@ -90,6 +87,43 @@ class BayesianKG:
         self.update_predicate_prior(pred, confidence)  # NEW: Update predicate prior
 
         return alpha / (alpha + beta)
+    
+    '''
+    Use neighbors of given object to recursively propagate confidence updates.
+    This allows new evidence to influence related edges, with diminishing impact as we go further out.
+
+    Infer confidence for neighbor edges based on existing beliefs
+
+    'The recursive propagation in propagate_edge can create infinite loops if the graph contains cycles. 
+    While max_depth provides some protection, a cycle of length less than max_depth (default 5) will still 
+    cause the same edge to be updated multiple times in a single propagation. Consider tracking visited edges 
+    during a propagation to prevent revisiting the same edge in a single call chain.'
+    
+    '''
+    def propagate_edge(self, subj, pred, obj, confidence, depth=0):
+        if depth >= self.max_depth:
+            return
+        
+        # Update the current edge
+        self.add_observation(subj, pred, obj, confidence, depth)
+
+        # Recursively propagate to connected edges via object neighbors
+        for neighbor_pred, neighbor_obj in self.graph_outgoing[obj]:  # Propagate from obj to its outgoing edges
+            # infer confidence for neighbor edge
+            inferred_confidence = self.infer_confidene(obj, neighbor_obj)
+            # recursive propagation with inferred confidence
+            self.propagate_edge(obj, neighbor_pred, neighbor_obj, inferred_confidence, depth + 1)
+
+    def infer_confidene(self, subj, obj):
+        confidences = []
+        for edge_key in self.edge_beliefs:
+            s, p, o = edge_key
+            if s == subj and o == obj:
+                alpha, beta = self.edge_beliefs[edge_key]
+                confidences.append(alpha / (alpha + beta))
+        if not confidences:
+            return 0.5
+        return sum(confidences) / len(confidences)
 
 def color_to_confidence(conf):
     norm_conf = (conf - 0.3) / (1.0 - 0.3)

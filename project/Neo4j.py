@@ -30,7 +30,7 @@ class Neo4jConnection:
                 )
             )
     
-    def upsert_relation(self, subj, pred, obj, alpha, beta, confidence, uncertainty, color=None, step=None):
+    def upsert_relation(self, subj, pred, obj, alpha, beta, original_confidence, confidence, uncertainty, color=None, step=None):
         with self.driver.session() as session:
             session.execute_write(
                 lambda tx: tx.run(
@@ -41,6 +41,7 @@ class Neo4jConnection:
                     SET r.alpha = $alpha,
                         r.beta = $beta,
                         r.confidence = $confidence,
+                        r.original_confidence = $original_confidence,
                         r.uncertainty = $uncertainty,
                         r.color = $color,
                         r.update_step = $step
@@ -51,6 +52,7 @@ class Neo4jConnection:
                     alpha=alpha,
                     beta=beta,
                     confidence=confidence,
+                    original_confidence=original_confidence,
                     uncertainty=uncertainty,
                     color=color,
                     step=step
