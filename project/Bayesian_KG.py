@@ -6,13 +6,16 @@ import webbrowser
 from Neo4j import Neo4jConnection
 
 class BayesianKG:
-    def __init__(self, prior_strength = 0.5, max_scale = 6.0):
+    def __init__(self, prior_strength = 0.5, max_scale = 6.0, gamma = 0.7, max_depth = 5):
         # Prior_Strength = how strong the belief WAS
         self.edge_beliefs = {} #subj-pred-obj --> (a,b)
         self.node_reliability = defaultdict(lambda: (prior_strength, prior_strength)) #node --> (a,b)
         self.predicate_priors = defaultdict(lambda: (prior_strength, prior_strength))  # NEW: pred --> (a,b)
         self.prior_strength = prior_strength
         self.max_scale = max_scale
+        self.gamma = gamma
+        self.max_depth = max_depth
+        self.graph_outgoing = defaultdict(list) # For recursive updates: subj --> [(pred, obj)]
 
     def get_evidence_scale(self, node_weight): # No static amplifier --> Dynamic amplification with max change resistance
         """Evidence scale is a hyperparameter that determines how much a belief should shift given new observations."""
@@ -54,7 +57,7 @@ class BayesianKG:
         n = alpha + beta
         return (alpha * beta) / (n * n * (n+1))
 
-    def add_observation(self, subj, pred, obj, confidence):
+    def add_observation(self, subj, pred, obj, confidence, depth = 0):
         edge_key = (subj, pred, obj)
 
         # Add node confidence as weight
@@ -62,16 +65,18 @@ class BayesianKG:
         obj_reliability = self.get_reliability(obj)
         node_weight = (subj_reliability + obj_reliability)/2
 
-
         # Add edge to KG if not already there
         if edge_key not in self.edge_beliefs:
             # NEW: Initialize with predicate prior instead of generic prior
             pred_alpha, pred_beta = self.predicate_priors[pred]
             self.edge_beliefs[edge_key] = (pred_alpha, pred_beta) # set default alpha/beta before overwrite
+            self.graph_outgoing[subj].append((pred, obj)) # Track outgoing edges for recursive updates
 
         alpha, beta = self.edge_beliefs[edge_key]
+
+        decay = self.gamma ** depth # decay = decay factor ^ depth
+        evidence_strength = self.get_evidence_scale(node_weight) * decay # Call for dynamic scaling instead of static 3x
         
-        evidence_strength = self.get_evidence_scale(node_weight) # Call for dynamic scaling instead of static 3x
         alpha += confidence * evidence_strength
         beta += (1 - confidence) * evidence_strength
 
@@ -82,6 +87,37 @@ class BayesianKG:
         self.update_predicate_prior(pred, confidence)  # NEW: Update predicate prior
 
         return alpha / (alpha + beta)
+    
+    '''
+    Use neighbors of given object to recursively propagate confidence updates.
+    This allows new evidence to influence related edges, with diminishing impact as we go further out.
+
+    Infer confidence for neighbor edges based on existing beliefs
+    '''
+    def propagate_edge(self, subj, pred, obj, confidence, depth=0):
+        if depth >= self.max_depth:
+            return
+        
+        # Update the current edge
+        self.add_observation(subj, pred, obj, confidence, depth)
+
+        # Recursively propagate to connected edges via object neighbors
+        for neighbor_pred, neighbor_obj in self.graph_outgoing[obj]:  # Propagate from obj to its outgoing edges
+            # infer confidence for neighbor edge
+            confidence = self.infer_confidene(obj, neighbor_obj)
+            # recursive propagation with inferred confidence
+            self.propagate_edge(obj, neighbor_pred, neighbor_obj, confidence, depth + 1)
+
+    def infer_confidene(self, subj, obj):
+        confidences = []
+        for edge_key in self.edge_beliefs:
+            s, p, o = edge_key
+            if s == subj and o == obj:
+                alpha, beta = self.edge_beliefs[edge_key]
+                confidences.append(alpha / (alpha + beta))
+            if not confidences:
+                return 0.5
+        return sum(confidences) / len(confidences)
 
 def color_to_confidence(conf):
     norm_conf = (conf - 0.3) / (1.0 - 0.3)
