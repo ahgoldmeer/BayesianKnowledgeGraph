@@ -13,45 +13,82 @@ def main():
     csv_path = BASE_DIR.parent / "data" / "MedData.csv"  # MAIN/data/csv
     df = pd.read_csv(csv_path)
 
-    for step, row in enumerate(df.itertuples(index=False)):
+    for row in df.itertuples(index=False):
         subj = row.Subject
         pred = row.Predicate
         obj = row.Object
         conf = row.Confidence
 
-        bayes_conf = bkg.add_observation(subj, pred, obj, conf)
+        bkg.propagate_edge(subj, pred, obj, conf, depth=0)
 
-        edge_alpha, edge_beta = bkg.edge_beliefs[(subj, pred, obj)]
-        # print(f"Step {step}: ({subj}, {pred}, {obj}) - Confidence: {conf:.2f} | Bayesian Confidence: {bayes_conf:.4f} | Edge Alpha: {edge_alpha:.2f}, Beta: {edge_beta:.2f}")
+    for node, (a, b) in bkg.node_reliability.items():
+        reliability = bkg.get_node_reliability(node)
+        neo4j.upsert_entity(
+            name = node,
+            alpha = a,
+            beta = b,
+            reliability = reliability,
+            color = rgb_string_to_hex(node_color_from_conf(reliability)),
+            size = 10 + 20 * reliability
+        )
 
+    step = 0
+    for (subj, pred, obj), (edge_alpha, edge_beta) in bkg.edge_beliefs.items():
+        confidence = edge_alpha / (edge_alpha + edge_beta)
         uncertainty = bkg.get_edge_uncertainty(subj, pred, obj)
-        # print(f"Uncertainty for edge ({subj}, {pred}, {obj}): {uncertainty:.4f}")
 
-        for node in (subj, obj):
-            a, b = bkg.node_reliability[node]
-            reliability = bkg.get_node_reliability(node)
-            # print(f"Node '{node}' - Reliability: {reliability:.4f} | Alpha: {a:.2f}, Beta: {b:.2f}")
-
-            neo4j.upsert_entity(
-                name = node,
-                alpha = a,
-                beta = b,
-                reliability = reliability,
-                color = rgb_string_to_hex(node_color_from_conf(reliability)),
-                size = 10 + 20 * reliability
-            )
-        
         neo4j.upsert_relation(
             subj = subj,
             pred = pred,
             obj = obj,
             alpha = edge_alpha,
             beta = edge_beta,
-            confidence = bayes_conf,
+            confidence = confidence,
+            original_confidence = df.Confidence[step] if step < len(df) else None,
             uncertainty = uncertainty,
-            color = rgb_string_to_hex(color_to_confidence(bayes_conf)),
-            step=step
+            color = rgb_string_to_hex(color_to_confidence(confidence))
         )
+        step += 1
+
+    # for step, row in enumerate(df.itertuples(index=False)):
+    #     subj = row.Subject
+    #     pred = row.Predicate
+    #     obj = row.Object
+    #     conf = row.Confidence
+
+    #     bayes_conf = bkg.add_observation(subj, pred, obj, conf)
+
+    #     edge_alpha, edge_beta = bkg.edge_beliefs[(subj, pred, obj)]
+    #     # print(f"Step {step}: ({subj}, {pred}, {obj}) - Confidence: {conf:.2f} | Bayesian Confidence: {bayes_conf:.4f} | Edge Alpha: {edge_alpha:.2f}, Beta: {edge_beta:.2f}")
+
+    #     uncertainty = bkg.get_edge_uncertainty(subj, pred, obj)
+    #     # print(f"Uncertainty for edge ({subj}, {pred}, {obj}): {uncertainty:.4f}")
+
+    #     for node in (subj, obj):
+    #         a, b = bkg.node_reliability[node]
+    #         reliability = bkg.get_node_reliability(node)
+    #         # print(f"Node '{node}' - Reliability: {reliability:.4f} | Alpha: {a:.2f}, Beta: {b:.2f}")
+
+    #         neo4j.upsert_entity(
+    #             name = node,
+    #             alpha = a,
+    #             beta = b,
+    #             reliability = reliability,
+    #             color = rgb_string_to_hex(node_color_from_conf(reliability)),
+    #             size = 10 + 20 * reliability
+    #         )
+        
+    #     neo4j.upsert_relation(
+    #         subj = subj,
+    #         pred = pred,
+    #         obj = obj,
+    #         alpha = edge_alpha,
+    #         beta = edge_beta,
+    #         confidence = bayes_conf,
+    #         uncertainty = uncertainty,
+    #         color = rgb_string_to_hex(color_to_confidence(bayes_conf)),
+    #         step=step
+    #     )
 
     neo4j.close()
 
