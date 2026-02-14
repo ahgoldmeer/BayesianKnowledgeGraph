@@ -115,8 +115,8 @@ class BayesianKG:
             if s == subj and o == obj:
                 alpha, beta = self.edge_beliefs[edge_key]
                 confidences.append(alpha / (alpha + beta))
-            if not confidences:
-                return 0.5
+        if not confidences:
+            return 0.5
         return sum(confidences) / len(confidences)
 
 def color_to_confidence(conf):

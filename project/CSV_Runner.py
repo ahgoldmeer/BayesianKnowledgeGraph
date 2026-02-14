@@ -47,7 +47,7 @@ def main():
             "alpha": edge_alpha,
             "beta": edge_beta,
             "confidence": confidence,
-            "original confidence": df.Confidence[step] if step < len(df) else None,  # Original confidence from CSV if available
+            "original_confidence": df.Confidence[step] if step < len(df) else None,  # Original confidence from CSV if available
             "uncertainty": uncertainty,
             "color": rgb_string_to_hex(color_to_confidence(confidence))
         })
