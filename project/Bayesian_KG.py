@@ -16,6 +16,7 @@ class BayesianKG:
         self.gamma = gamma
         self.max_depth = max_depth
         self.graph_outgoing = defaultdict(list) # For recursive updates: subj --> [(pred, obj)]
+        self.edge_original_conf = {} # Store original confidence from CSV for reference --> (subj, pred, obj) --> conf
 
     def get_evidence_scale(self, node_weight): # No static amplifier --> Dynamic amplification with max change resistance
         """Evidence scale is a hyperparameter that determines how much a belief should shift given new observations."""
@@ -26,20 +27,20 @@ class BayesianKG:
         alpha, beta = self.node_reliability[node]
         return alpha / (alpha + beta)
     
-    def update_node_reliability(self, node, confidence):
-        alpha, beta = self.node_reliability[node]
-        alpha += confidence
-        beta += (1-confidence)
+    def update_node_reliability(self, node, confidence, weight=1.0):
+        alpha, beta = self.node_reliability.get(node, (self.prior_strength, self.prior_strength))
+        alpha += confidence * weight
+        beta += (1-confidence) * weight
         self.node_reliability[node] = (alpha, beta)
     
     def get_node_reliability(self, node):
         return self.get_reliability(node)
     
-    def update_predicate_prior(self, pred, confidence):  # NEW METHOD
+    def update_predicate_prior(self, pred, confidence, weight=1.0):  # NEW METHOD
         """Update predicate-level statistics"""
-        alpha, beta = self.predicate_priors[pred]
-        alpha += confidence
-        beta += (1 - confidence)
+        alpha, beta = self.predicate_priors.get(pred, (self.prior_strength, self.prior_strength))
+        alpha += confidence * weight
+        beta += (1 - confidence) * weight
         self.predicate_priors[pred] = (alpha, beta)
     
     def get_edge_confidence(self, subj, pred, obj): # Get confidence for a given edge
@@ -82,9 +83,9 @@ class BayesianKG:
 
         self.edge_beliefs[edge_key] = (alpha, beta) # overwrite alpha/beta
 
-        self.update_node_reliability(subj, confidence)
-        self.update_node_reliability(obj, confidence)
-        self.update_predicate_prior(pred, confidence)  # NEW: Update predicate prior
+        self.update_node_reliability(subj, confidence, evidence_strength)
+        self.update_node_reliability(obj, confidence, evidence_strength)
+        self.update_predicate_prior(pred, confidence, evidence_strength)  # NEW: Update predicate prior
 
         return alpha / (alpha + beta)
     
@@ -100,7 +101,15 @@ class BayesianKG:
     during a propagation to prevent revisiting the same edge in a single call chain.'
     
     '''
-    def propagate_edge(self, subj, pred, obj, confidence, depth=0):
+    def propagate_edge(self, subj, pred, obj, confidence, depth=0, visited=None):
+        if visited is None:
+            visited = set()
+
+        edge_key = (subj, pred, obj)
+        if edge_key in visited:
+            return
+        visited.add(edge_key)
+        
         if depth >= self.max_depth:
             return
         
@@ -108,13 +117,13 @@ class BayesianKG:
         self.add_observation(subj, pred, obj, confidence, depth)
 
         # Recursively propagate to connected edges via object neighbors
-        for neighbor_pred, neighbor_obj in self.graph_outgoing[obj]:  # Propagate from obj to its outgoing edges
+        for neighbor_pred, neighbor_obj in self.graph_outgoing.get(obj, []):  # Propagate from obj to its outgoing edges
             # infer confidence for neighbor edge
-            inferred_confidence = self.infer_confidene(obj, neighbor_obj)
+            inferred_confidence = self.infer_confidence(obj, neighbor_obj)
             # recursive propagation with inferred confidence
             self.propagate_edge(obj, neighbor_pred, neighbor_obj, inferred_confidence, depth + 1)
 
-    def infer_confidene(self, subj, obj):
+    def infer_confidence(self, subj, obj):
         confidences = []
         for edge_key in self.edge_beliefs:
             s, p, o = edge_key
