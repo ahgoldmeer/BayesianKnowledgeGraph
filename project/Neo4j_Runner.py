@@ -7,6 +7,11 @@ from pathlib import Path
 def main():
 
     neo4j = Neo4jConnection(uri="neo4j://127.0.0.1:7687", user="neo4j", password="password")
+    # neo4j = Neo4jConnection(
+    #     uri="neo4j+s://90a9ceff.databases.neo4j.io",
+    #     user="90a9ceff",
+    #     password="bAiVzMxJ86AsbyKse_HByXgskxKZQOcGG9mwqGcnJQM"
+    # )
     bkg = BayesianKG(prior_strength=0.5, max_scale=6.0)
 
     existing_nodes = neo4j.get_all_entities()
@@ -19,8 +24,10 @@ def main():
             bkg.edge_beliefs[key] = (rel["alpha"],rel["beta"])
 
     BASE_DIR = Path(__file__).resolve().parent      # MAIN/project
-    csv_path = BASE_DIR.parent / "data" / "MedData2.csv"  # MAIN/data/csv
+    csv_path = BASE_DIR.parent / "data" / "MedData.csv"  # MAIN/data/csv
+    # csv_path = BASE_DIR.parent / "data" / "val.tsv"
     df = pd.read_csv(csv_path)
+    # df = pd.read_csv(csv_path, sep='\t')
 
     for row in df.itertuples(index=False):
         subj = row.Subject
