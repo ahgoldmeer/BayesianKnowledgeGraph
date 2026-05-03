@@ -24,15 +24,15 @@ This project extends a traditional knowledge graph with local belief updating, n
 
 ## Core Code
 
-- [Bayesian KG model](project/Bayesian_KG.py) - the core belief-update logic, confidence scoring, and propagation routines.
-- [CSV runner](project/CSV_Runner.py) - generates node and edge CSV outputs from the model.
-- [Neo4j runner](project/Neo4j_Runner.py) - loads the model output into Neo4j for graph storage and inspection.
+- [Bayesian KG model](https://github.com/ahgoldmeer/BayesianKnowledgeGraph/tree/main/project/Bayesian_KG.py) - the core belief-update logic, confidence scoring, and propagation routines.
+- [CSV runner](https://github.com/ahgoldmeer/BayesianKnowledgeGraph/tree/main/project/CSV_Runner.py) - generates node and edge CSV outputs from the model.
+- [Neo4j runner](https://github.com/ahgoldmeer/BayesianKnowledgeGraph/tree/main/project/Neo4j_Runner.py) - loads the model output into Neo4j for graph storage and inspection.
 
 ## Data and Experiments
 
-- [General data](data/general/) - the main medical knowledge base in NAL format.
-- [Experiment data](data/experiments/) - generated experiment inputs and outputs, including ordering and contradiction runs.
-- [CN15k data](data/CN15k/) - decoded validation data and supporting ID maps.
+- [General data (GitHub)](https://github.com/ahgoldmeer/BayesianKnowledgeGraph/tree/main/data/general/) - the main medical knowledge base in NAL format.
+- [Experiment data (GitHub)](https://github.com/ahgoldmeer/BayesianKnowledgeGraph/tree/main/data/experiments/) - generated inputs and outputs, including ordering and contradiction runs.
+- [CN15k data (GitHub)](https://github.com/ahgoldmeer/BayesianKnowledgeGraph/tree/main/data/CN15k/) - decoded validation data and supporting ID maps.
 
 ## Repository Layout
 
