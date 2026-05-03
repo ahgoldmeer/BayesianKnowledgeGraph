@@ -1,0 +1,994 @@
+// NARS Medical Knowledge Base - Bridging Rule Version
+// Bridging rules loaded FIRST to establish representational alignment
+// before any data is introduced, preventing relation collapse.
+//
+// Bridging rule form:
+//   <(*,?x,?y) --> predicate> ==> <?x --> (/,predicate,_,?y)>.
+// This ensures product form and relational image form stay aligned
+// throughout inference, preventing predicate concept drift.
+
+// ============================================================
+// SECTION 1: BRIDGING RULES
+// ============================================================
+
+// Align product form <-> relational image form for: caused_by
+<<(*,?x,?y) --> caused_by> ==> <?x --> (/, caused_by,_,?y)>>.
+<<(?x --> (/, caused_by,_,?y))> ==> <(*,?x,?y) --> caused_by>>.
+5
+
+// Align product form <-> relational image form for: is_symptom_of
+<<(*,?x,?y) --> is_symptom_of> ==> <?x --> (/, is_symptom_of,_,?y)>>.
+<<(?x --> (/, is_symptom_of,_,?y))> ==> <(*,?x,?y) --> is_symptom_of>>.
+5
+
+// Align product form <-> relational image form for: treated_with
+<<(*,?x,?y) --> treated_with> ==> <?x --> (/, treated_with,_,?y)>>.
+<<(?x --> (/, treated_with,_,?y))> ==> <(*,?x,?y) --> treated_with>>.
+5
+
+
+// ============================================================
+// SECTION 2: DATA
+// ============================================================
+
+// Fever is_symptom_of Influenza (conf=0.78, reps=4)
+<(*,Fever,Influenza) --> is_symptom_of>. %0.78;0.9%
+<(*,Fever,Influenza) --> is_symptom_of>. %0.78;0.9%
+<(*,Fever,Influenza) --> is_symptom_of>. %0.78;0.9%
+<(*,Fever,Influenza) --> is_symptom_of>. %0.78;0.9%
+5
+
+// Cough is_symptom_of Influenza (conf=0.72, reps=3)
+<(*,Cough,Influenza) --> is_symptom_of>. %0.72;0.9%
+<(*,Cough,Influenza) --> is_symptom_of>. %0.72;0.9%
+<(*,Cough,Influenza) --> is_symptom_of>. %0.72;0.9%
+5
+
+// Fatigue is_symptom_of Influenza (conf=0.83, reps=5)
+<(*,Fatigue,Influenza) --> is_symptom_of>. %0.83;0.9%
+<(*,Fatigue,Influenza) --> is_symptom_of>. %0.83;0.9%
+<(*,Fatigue,Influenza) --> is_symptom_of>. %0.83;0.9%
+<(*,Fatigue,Influenza) --> is_symptom_of>. %0.83;0.9%
+<(*,Fatigue,Influenza) --> is_symptom_of>. %0.83;0.9%
+5
+
+// Influenza treated_with Oseltamivir (conf=0.93, reps=13)
+<(*,Influenza,Oseltamivir) --> treated_with>. %0.93;0.9%
+<(*,Influenza,Oseltamivir) --> treated_with>. %0.93;0.9%
+<(*,Influenza,Oseltamivir) --> treated_with>. %0.93;0.9%
+<(*,Influenza,Oseltamivir) --> treated_with>. %0.93;0.9%
+<(*,Influenza,Oseltamivir) --> treated_with>. %0.93;0.9%
+<(*,Influenza,Oseltamivir) --> treated_with>. %0.93;0.9%
+<(*,Influenza,Oseltamivir) --> treated_with>. %0.93;0.9%
+<(*,Influenza,Oseltamivir) --> treated_with>. %0.93;0.9%
+<(*,Influenza,Oseltamivir) --> treated_with>. %0.93;0.9%
+<(*,Influenza,Oseltamivir) --> treated_with>. %0.93;0.9%
+<(*,Influenza,Oseltamivir) --> treated_with>. %0.93;0.9%
+<(*,Influenza,Oseltamivir) --> treated_with>. %0.93;0.9%
+<(*,Influenza,Oseltamivir) --> treated_with>. %0.93;0.9%
+5
+
+// Body Aches is_symptom_of Influenza (conf=0.69, reps=2)
+<(*,Body_Aches,Influenza) --> is_symptom_of>. %0.69;0.9%
+<(*,Body_Aches,Influenza) --> is_symptom_of>. %0.69;0.9%
+5
+
+// Shortness of Breath is_symptom_of Pneumonia (conf=0.88, reps=7)
+<(*,Shortness_of_Breath,Pneumonia) --> is_symptom_of>. %0.88;0.9%
+<(*,Shortness_of_Breath,Pneumonia) --> is_symptom_of>. %0.88;0.9%
+<(*,Shortness_of_Breath,Pneumonia) --> is_symptom_of>. %0.88;0.9%
+<(*,Shortness_of_Breath,Pneumonia) --> is_symptom_of>. %0.88;0.9%
+<(*,Shortness_of_Breath,Pneumonia) --> is_symptom_of>. %0.88;0.9%
+<(*,Shortness_of_Breath,Pneumonia) --> is_symptom_of>. %0.88;0.9%
+<(*,Shortness_of_Breath,Pneumonia) --> is_symptom_of>. %0.88;0.9%
+5
+
+// Chest Pain is_symptom_of Pneumonia (conf=0.47, reps=1)
+<(*,Chest_Pain,Pneumonia) --> is_symptom_of>. %0.47;0.9%
+5
+
+// Fever is_symptom_of Pneumonia (conf=0.76, reps=3)
+<(*,Fever,Pneumonia) --> is_symptom_of>. %0.76;0.9%
+<(*,Fever,Pneumonia) --> is_symptom_of>. %0.76;0.9%
+<(*,Fever,Pneumonia) --> is_symptom_of>. %0.76;0.9%
+5
+
+// Pneumonia treated_with Antibiotics (conf=0.91, reps=10)
+<(*,Pneumonia,Antibiotics) --> treated_with>. %0.91;0.9%
+<(*,Pneumonia,Antibiotics) --> treated_with>. %0.91;0.9%
+<(*,Pneumonia,Antibiotics) --> treated_with>. %0.91;0.9%
+<(*,Pneumonia,Antibiotics) --> treated_with>. %0.91;0.9%
+<(*,Pneumonia,Antibiotics) --> treated_with>. %0.91;0.9%
+<(*,Pneumonia,Antibiotics) --> treated_with>. %0.91;0.9%
+<(*,Pneumonia,Antibiotics) --> treated_with>. %0.91;0.9%
+<(*,Pneumonia,Antibiotics) --> treated_with>. %0.91;0.9%
+<(*,Pneumonia,Antibiotics) --> treated_with>. %0.91;0.9%
+<(*,Pneumonia,Antibiotics) --> treated_with>. %0.91;0.9%
+5
+
+// Pneumonia caused_by Bacterial Infection (conf=0.82, reps=5)
+<(*,Pneumonia,Bacterial_Infection) --> caused_by>. %0.82;0.9%
+<(*,Pneumonia,Bacterial_Infection) --> caused_by>. %0.82;0.9%
+<(*,Pneumonia,Bacterial_Infection) --> caused_by>. %0.82;0.9%
+<(*,Pneumonia,Bacterial_Infection) --> caused_by>. %0.82;0.9%
+<(*,Pneumonia,Bacterial_Infection) --> caused_by>. %0.82;0.9%
+5
+
+// Headache is_symptom_of Migraine (conf=0.89, reps=8)
+<(*,Headache,Migraine) --> is_symptom_of>. %0.89;0.9%
+<(*,Headache,Migraine) --> is_symptom_of>. %0.89;0.9%
+<(*,Headache,Migraine) --> is_symptom_of>. %0.89;0.9%
+<(*,Headache,Migraine) --> is_symptom_of>. %0.89;0.9%
+<(*,Headache,Migraine) --> is_symptom_of>. %0.89;0.9%
+<(*,Headache,Migraine) --> is_symptom_of>. %0.89;0.9%
+<(*,Headache,Migraine) --> is_symptom_of>. %0.89;0.9%
+<(*,Headache,Migraine) --> is_symptom_of>. %0.89;0.9%
+5
+
+// Nausea is_symptom_of Migraine (conf=0.41, reps=1)
+<(*,Nausea,Migraine) --> is_symptom_of>. %0.41;0.9%
+5
+
+// Light Sensitivity is_symptom_of Migraine (conf=0.67, reps=2)
+<(*,Light_Sensitivity,Migraine) --> is_symptom_of>. %0.67;0.9%
+<(*,Light_Sensitivity,Migraine) --> is_symptom_of>. %0.67;0.9%
+5
+
+// Migraine treated_with Triptans (conf=0.92, reps=12)
+<(*,Migraine,Triptans) --> treated_with>. %0.92;0.9%
+<(*,Migraine,Triptans) --> treated_with>. %0.92;0.9%
+<(*,Migraine,Triptans) --> treated_with>. %0.92;0.9%
+<(*,Migraine,Triptans) --> treated_with>. %0.92;0.9%
+<(*,Migraine,Triptans) --> treated_with>. %0.92;0.9%
+<(*,Migraine,Triptans) --> treated_with>. %0.92;0.9%
+<(*,Migraine,Triptans) --> treated_with>. %0.92;0.9%
+<(*,Migraine,Triptans) --> treated_with>. %0.92;0.9%
+<(*,Migraine,Triptans) --> treated_with>. %0.92;0.9%
+<(*,Migraine,Triptans) --> treated_with>. %0.92;0.9%
+<(*,Migraine,Triptans) --> treated_with>. %0.92;0.9%
+<(*,Migraine,Triptans) --> treated_with>. %0.92;0.9%
+5
+
+// Fatigue is_symptom_of Anemia (conf=0.54, reps=1)
+<(*,Fatigue,Anemia) --> is_symptom_of>. %0.54;0.9%
+5
+
+// Pale Skin is_symptom_of Anemia (conf=0.36, reps=1)
+<(*,Pale_Skin,Anemia) --> is_symptom_of>. %0.36;0.9%
+5
+
+// Dizziness is_symptom_of Anemia (conf=0.43, reps=1)
+<(*,Dizziness,Anemia) --> is_symptom_of>. %0.43;0.9%
+5
+
+// Anemia caused_by Iron Deficiency (conf=0.87, reps=7)
+<(*,Anemia,Iron_Deficiency) --> caused_by>. %0.87;0.9%
+<(*,Anemia,Iron_Deficiency) --> caused_by>. %0.87;0.9%
+<(*,Anemia,Iron_Deficiency) --> caused_by>. %0.87;0.9%
+<(*,Anemia,Iron_Deficiency) --> caused_by>. %0.87;0.9%
+<(*,Anemia,Iron_Deficiency) --> caused_by>. %0.87;0.9%
+<(*,Anemia,Iron_Deficiency) --> caused_by>. %0.87;0.9%
+<(*,Anemia,Iron_Deficiency) --> caused_by>. %0.87;0.9%
+5
+
+// Anemia treated_with Iron Supplements (conf=0.95, reps=19)
+<(*,Anemia,Iron_Supplements) --> treated_with>. %0.95;0.9%
+<(*,Anemia,Iron_Supplements) --> treated_with>. %0.95;0.9%
+<(*,Anemia,Iron_Supplements) --> treated_with>. %0.95;0.9%
+<(*,Anemia,Iron_Supplements) --> treated_with>. %0.95;0.9%
+<(*,Anemia,Iron_Supplements) --> treated_with>. %0.95;0.9%
+<(*,Anemia,Iron_Supplements) --> treated_with>. %0.95;0.9%
+<(*,Anemia,Iron_Supplements) --> treated_with>. %0.95;0.9%
+<(*,Anemia,Iron_Supplements) --> treated_with>. %0.95;0.9%
+<(*,Anemia,Iron_Supplements) --> treated_with>. %0.95;0.9%
+<(*,Anemia,Iron_Supplements) --> treated_with>. %0.95;0.9%
+<(*,Anemia,Iron_Supplements) --> treated_with>. %0.95;0.9%
+<(*,Anemia,Iron_Supplements) --> treated_with>. %0.95;0.9%
+<(*,Anemia,Iron_Supplements) --> treated_with>. %0.95;0.9%
+<(*,Anemia,Iron_Supplements) --> treated_with>. %0.95;0.9%
+<(*,Anemia,Iron_Supplements) --> treated_with>. %0.95;0.9%
+<(*,Anemia,Iron_Supplements) --> treated_with>. %0.95;0.9%
+<(*,Anemia,Iron_Supplements) --> treated_with>. %0.95;0.9%
+<(*,Anemia,Iron_Supplements) --> treated_with>. %0.95;0.9%
+<(*,Anemia,Iron_Supplements) --> treated_with>. %0.95;0.9%
+5
+
+// Joint Pain is_symptom_of Rheumatoid Arthritis (conf=0.81, reps=4)
+<(*,Joint_Pain,Rheumatoid_Arthritis) --> is_symptom_of>. %0.81;0.9%
+<(*,Joint_Pain,Rheumatoid_Arthritis) --> is_symptom_of>. %0.81;0.9%
+<(*,Joint_Pain,Rheumatoid_Arthritis) --> is_symptom_of>. %0.81;0.9%
+<(*,Joint_Pain,Rheumatoid_Arthritis) --> is_symptom_of>. %0.81;0.9%
+5
+
+// Swelling is_symptom_of Rheumatoid Arthritis (conf=0.74, reps=3)
+<(*,Swelling,Rheumatoid_Arthritis) --> is_symptom_of>. %0.74;0.9%
+<(*,Swelling,Rheumatoid_Arthritis) --> is_symptom_of>. %0.74;0.9%
+<(*,Swelling,Rheumatoid_Arthritis) --> is_symptom_of>. %0.74;0.9%
+5
+
+// Stiffness is_symptom_of Rheumatoid Arthritis (conf=0.69, reps=2)
+<(*,Stiffness,Rheumatoid_Arthritis) --> is_symptom_of>. %0.69;0.9%
+<(*,Stiffness,Rheumatoid_Arthritis) --> is_symptom_of>. %0.69;0.9%
+5
+
+// Rheumatoid Arthritis treated_with NSAIDs (conf=0.58, reps=1)
+<(*,Rheumatoid_Arthritis,NSAIDs) --> treated_with>. %0.58;0.9%
+5
+
+// Rheumatoid Arthritis treated_with DMARDs (conf=0.9, reps=9)
+<(*,Rheumatoid_Arthritis,DMARDs) --> treated_with>. %0.9;0.9%
+<(*,Rheumatoid_Arthritis,DMARDs) --> treated_with>. %0.9;0.9%
+<(*,Rheumatoid_Arthritis,DMARDs) --> treated_with>. %0.9;0.9%
+<(*,Rheumatoid_Arthritis,DMARDs) --> treated_with>. %0.9;0.9%
+<(*,Rheumatoid_Arthritis,DMARDs) --> treated_with>. %0.9;0.9%
+<(*,Rheumatoid_Arthritis,DMARDs) --> treated_with>. %0.9;0.9%
+<(*,Rheumatoid_Arthritis,DMARDs) --> treated_with>. %0.9;0.9%
+<(*,Rheumatoid_Arthritis,DMARDs) --> treated_with>. %0.9;0.9%
+<(*,Rheumatoid_Arthritis,DMARDs) --> treated_with>. %0.9;0.9%
+5
+
+// Fever is_symptom_of COVID-19 (conf=0.84, reps=5)
+<(*,Fever,COVID_19) --> is_symptom_of>. %0.84;0.9%
+<(*,Fever,COVID_19) --> is_symptom_of>. %0.84;0.9%
+<(*,Fever,COVID_19) --> is_symptom_of>. %0.84;0.9%
+<(*,Fever,COVID_19) --> is_symptom_of>. %0.84;0.9%
+<(*,Fever,COVID_19) --> is_symptom_of>. %0.84;0.9%
+5
+
+// Cough is_symptom_of COVID-19 (conf=0.79, reps=4)
+<(*,Cough,COVID_19) --> is_symptom_of>. %0.79;0.9%
+<(*,Cough,COVID_19) --> is_symptom_of>. %0.79;0.9%
+<(*,Cough,COVID_19) --> is_symptom_of>. %0.79;0.9%
+<(*,Cough,COVID_19) --> is_symptom_of>. %0.79;0.9%
+5
+
+// Fatigue is_symptom_of COVID-19 (conf=0.66, reps=2)
+<(*,Fatigue,COVID_19) --> is_symptom_of>. %0.66;0.9%
+<(*,Fatigue,COVID_19) --> is_symptom_of>. %0.66;0.9%
+5
+
+// Loss of Smell is_symptom_of COVID-19 (conf=0.93, reps=13)
+<(*,Loss_of_Smell,COVID_19) --> is_symptom_of>. %0.93;0.9%
+<(*,Loss_of_Smell,COVID_19) --> is_symptom_of>. %0.93;0.9%
+<(*,Loss_of_Smell,COVID_19) --> is_symptom_of>. %0.93;0.9%
+<(*,Loss_of_Smell,COVID_19) --> is_symptom_of>. %0.93;0.9%
+<(*,Loss_of_Smell,COVID_19) --> is_symptom_of>. %0.93;0.9%
+<(*,Loss_of_Smell,COVID_19) --> is_symptom_of>. %0.93;0.9%
+<(*,Loss_of_Smell,COVID_19) --> is_symptom_of>. %0.93;0.9%
+<(*,Loss_of_Smell,COVID_19) --> is_symptom_of>. %0.93;0.9%
+<(*,Loss_of_Smell,COVID_19) --> is_symptom_of>. %0.93;0.9%
+<(*,Loss_of_Smell,COVID_19) --> is_symptom_of>. %0.93;0.9%
+<(*,Loss_of_Smell,COVID_19) --> is_symptom_of>. %0.93;0.9%
+<(*,Loss_of_Smell,COVID_19) --> is_symptom_of>. %0.93;0.9%
+<(*,Loss_of_Smell,COVID_19) --> is_symptom_of>. %0.93;0.9%
+5
+
+// COVID-19 treated_with Nirmatrelvir (conf=0.88, reps=7)
+<(*,COVID_19,Nirmatrelvir) --> treated_with>. %0.88;0.9%
+<(*,COVID_19,Nirmatrelvir) --> treated_with>. %0.88;0.9%
+<(*,COVID_19,Nirmatrelvir) --> treated_with>. %0.88;0.9%
+<(*,COVID_19,Nirmatrelvir) --> treated_with>. %0.88;0.9%
+<(*,COVID_19,Nirmatrelvir) --> treated_with>. %0.88;0.9%
+<(*,COVID_19,Nirmatrelvir) --> treated_with>. %0.88;0.9%
+<(*,COVID_19,Nirmatrelvir) --> treated_with>. %0.88;0.9%
+5
+
+// COVID-19 caused_by Viral Infection (conf=0.95, reps=19)
+<(*,COVID_19,Viral_Infection) --> caused_by>. %0.95;0.9%
+<(*,COVID_19,Viral_Infection) --> caused_by>. %0.95;0.9%
+<(*,COVID_19,Viral_Infection) --> caused_by>. %0.95;0.9%
+<(*,COVID_19,Viral_Infection) --> caused_by>. %0.95;0.9%
+<(*,COVID_19,Viral_Infection) --> caused_by>. %0.95;0.9%
+<(*,COVID_19,Viral_Infection) --> caused_by>. %0.95;0.9%
+<(*,COVID_19,Viral_Infection) --> caused_by>. %0.95;0.9%
+<(*,COVID_19,Viral_Infection) --> caused_by>. %0.95;0.9%
+<(*,COVID_19,Viral_Infection) --> caused_by>. %0.95;0.9%
+<(*,COVID_19,Viral_Infection) --> caused_by>. %0.95;0.9%
+<(*,COVID_19,Viral_Infection) --> caused_by>. %0.95;0.9%
+<(*,COVID_19,Viral_Infection) --> caused_by>. %0.95;0.9%
+<(*,COVID_19,Viral_Infection) --> caused_by>. %0.95;0.9%
+<(*,COVID_19,Viral_Infection) --> caused_by>. %0.95;0.9%
+<(*,COVID_19,Viral_Infection) --> caused_by>. %0.95;0.9%
+<(*,COVID_19,Viral_Infection) --> caused_by>. %0.95;0.9%
+<(*,COVID_19,Viral_Infection) --> caused_by>. %0.95;0.9%
+<(*,COVID_19,Viral_Infection) --> caused_by>. %0.95;0.9%
+<(*,COVID_19,Viral_Infection) --> caused_by>. %0.95;0.9%
+5
+
+// Sore Throat is_symptom_of Strep Throat (conf=0.68, reps=2)
+<(*,Sore_Throat,Strep_Throat) --> is_symptom_of>. %0.68;0.9%
+<(*,Sore_Throat,Strep_Throat) --> is_symptom_of>. %0.68;0.9%
+5
+
+// Fever is_symptom_of Strep Throat (conf=0.74, reps=3)
+<(*,Fever,Strep_Throat) --> is_symptom_of>. %0.74;0.9%
+<(*,Fever,Strep_Throat) --> is_symptom_of>. %0.74;0.9%
+<(*,Fever,Strep_Throat) --> is_symptom_of>. %0.74;0.9%
+5
+
+// Strep Throat treated_with Penicillin (conf=0.92, reps=12)
+<(*,Strep_Throat,Penicillin) --> treated_with>. %0.92;0.9%
+<(*,Strep_Throat,Penicillin) --> treated_with>. %0.92;0.9%
+<(*,Strep_Throat,Penicillin) --> treated_with>. %0.92;0.9%
+<(*,Strep_Throat,Penicillin) --> treated_with>. %0.92;0.9%
+<(*,Strep_Throat,Penicillin) --> treated_with>. %0.92;0.9%
+<(*,Strep_Throat,Penicillin) --> treated_with>. %0.92;0.9%
+<(*,Strep_Throat,Penicillin) --> treated_with>. %0.92;0.9%
+<(*,Strep_Throat,Penicillin) --> treated_with>. %0.92;0.9%
+<(*,Strep_Throat,Penicillin) --> treated_with>. %0.92;0.9%
+<(*,Strep_Throat,Penicillin) --> treated_with>. %0.92;0.9%
+<(*,Strep_Throat,Penicillin) --> treated_with>. %0.92;0.9%
+<(*,Strep_Throat,Penicillin) --> treated_with>. %0.92;0.9%
+5
+
+// Strep Throat caused_by Bacterial Infection (conf=0.83, reps=5)
+<(*,Strep_Throat,Bacterial_Infection) --> caused_by>. %0.83;0.9%
+<(*,Strep_Throat,Bacterial_Infection) --> caused_by>. %0.83;0.9%
+<(*,Strep_Throat,Bacterial_Infection) --> caused_by>. %0.83;0.9%
+<(*,Strep_Throat,Bacterial_Infection) --> caused_by>. %0.83;0.9%
+<(*,Strep_Throat,Bacterial_Infection) --> caused_by>. %0.83;0.9%
+5
+
+// Sneezing is_symptom_of Seasonal Allergies (conf=0.71, reps=2)
+<(*,Sneezing,Seasonal_Allergies) --> is_symptom_of>. %0.71;0.9%
+<(*,Sneezing,Seasonal_Allergies) --> is_symptom_of>. %0.71;0.9%
+5
+
+// Itchy Eyes is_symptom_of Seasonal Allergies (conf=0.32, reps=1)
+<(*,Itchy_Eyes,Seasonal_Allergies) --> is_symptom_of>. %0.32;0.9%
+5
+
+// Runny Nose is_symptom_of Seasonal Allergies (conf=0.77, reps=3)
+<(*,Runny_Nose,Seasonal_Allergies) --> is_symptom_of>. %0.77;0.9%
+<(*,Runny_Nose,Seasonal_Allergies) --> is_symptom_of>. %0.77;0.9%
+<(*,Runny_Nose,Seasonal_Allergies) --> is_symptom_of>. %0.77;0.9%
+5
+
+// Seasonal Allergies treated_with Antihistamines (conf=0.89, reps=8)
+<(*,Seasonal_Allergies,Antihistamines) --> treated_with>. %0.89;0.9%
+<(*,Seasonal_Allergies,Antihistamines) --> treated_with>. %0.89;0.9%
+<(*,Seasonal_Allergies,Antihistamines) --> treated_with>. %0.89;0.9%
+<(*,Seasonal_Allergies,Antihistamines) --> treated_with>. %0.89;0.9%
+<(*,Seasonal_Allergies,Antihistamines) --> treated_with>. %0.89;0.9%
+<(*,Seasonal_Allergies,Antihistamines) --> treated_with>. %0.89;0.9%
+<(*,Seasonal_Allergies,Antihistamines) --> treated_with>. %0.89;0.9%
+<(*,Seasonal_Allergies,Antihistamines) --> treated_with>. %0.89;0.9%
+5
+
+// Wheezing is_symptom_of Asthma (conf=0.85, reps=6)
+<(*,Wheezing,Asthma) --> is_symptom_of>. %0.85;0.9%
+<(*,Wheezing,Asthma) --> is_symptom_of>. %0.85;0.9%
+<(*,Wheezing,Asthma) --> is_symptom_of>. %0.85;0.9%
+<(*,Wheezing,Asthma) --> is_symptom_of>. %0.85;0.9%
+<(*,Wheezing,Asthma) --> is_symptom_of>. %0.85;0.9%
+<(*,Wheezing,Asthma) --> is_symptom_of>. %0.85;0.9%
+5
+
+// Shortness of Breath is_symptom_of Asthma (conf=0.92, reps=12)
+<(*,Shortness_of_Breath,Asthma) --> is_symptom_of>. %0.92;0.9%
+<(*,Shortness_of_Breath,Asthma) --> is_symptom_of>. %0.92;0.9%
+<(*,Shortness_of_Breath,Asthma) --> is_symptom_of>. %0.92;0.9%
+<(*,Shortness_of_Breath,Asthma) --> is_symptom_of>. %0.92;0.9%
+<(*,Shortness_of_Breath,Asthma) --> is_symptom_of>. %0.92;0.9%
+<(*,Shortness_of_Breath,Asthma) --> is_symptom_of>. %0.92;0.9%
+<(*,Shortness_of_Breath,Asthma) --> is_symptom_of>. %0.92;0.9%
+<(*,Shortness_of_Breath,Asthma) --> is_symptom_of>. %0.92;0.9%
+<(*,Shortness_of_Breath,Asthma) --> is_symptom_of>. %0.92;0.9%
+<(*,Shortness_of_Breath,Asthma) --> is_symptom_of>. %0.92;0.9%
+<(*,Shortness_of_Breath,Asthma) --> is_symptom_of>. %0.92;0.9%
+<(*,Shortness_of_Breath,Asthma) --> is_symptom_of>. %0.92;0.9%
+5
+
+// Asthma treated_with Inhaled Corticosteroids (conf=0.94, reps=16)
+<(*,Asthma,Inhaled_Corticosteroids) --> treated_with>. %0.94;0.9%
+<(*,Asthma,Inhaled_Corticosteroids) --> treated_with>. %0.94;0.9%
+<(*,Asthma,Inhaled_Corticosteroids) --> treated_with>. %0.94;0.9%
+<(*,Asthma,Inhaled_Corticosteroids) --> treated_with>. %0.94;0.9%
+<(*,Asthma,Inhaled_Corticosteroids) --> treated_with>. %0.94;0.9%
+<(*,Asthma,Inhaled_Corticosteroids) --> treated_with>. %0.94;0.9%
+<(*,Asthma,Inhaled_Corticosteroids) --> treated_with>. %0.94;0.9%
+<(*,Asthma,Inhaled_Corticosteroids) --> treated_with>. %0.94;0.9%
+<(*,Asthma,Inhaled_Corticosteroids) --> treated_with>. %0.94;0.9%
+<(*,Asthma,Inhaled_Corticosteroids) --> treated_with>. %0.94;0.9%
+<(*,Asthma,Inhaled_Corticosteroids) --> treated_with>. %0.94;0.9%
+<(*,Asthma,Inhaled_Corticosteroids) --> treated_with>. %0.94;0.9%
+<(*,Asthma,Inhaled_Corticosteroids) --> treated_with>. %0.94;0.9%
+<(*,Asthma,Inhaled_Corticosteroids) --> treated_with>. %0.94;0.9%
+<(*,Asthma,Inhaled_Corticosteroids) --> treated_with>. %0.94;0.9%
+<(*,Asthma,Inhaled_Corticosteroids) --> treated_with>. %0.94;0.9%
+5
+
+// Chest Tightness is_symptom_of Asthma (conf=0.73, reps=3)
+<(*,Chest_Tightness,Asthma) --> is_symptom_of>. %0.73;0.9%
+<(*,Chest_Tightness,Asthma) --> is_symptom_of>. %0.73;0.9%
+<(*,Chest_Tightness,Asthma) --> is_symptom_of>. %0.73;0.9%
+5
+
+// Nausea is_symptom_of Food Poisoning (conf=0.44, reps=1)
+<(*,Nausea,Food_Poisoning) --> is_symptom_of>. %0.44;0.9%
+5
+
+// Vomiting is_symptom_of Food Poisoning (conf=0.82, reps=5)
+<(*,Vomiting,Food_Poisoning) --> is_symptom_of>. %0.82;0.9%
+<(*,Vomiting,Food_Poisoning) --> is_symptom_of>. %0.82;0.9%
+<(*,Vomiting,Food_Poisoning) --> is_symptom_of>. %0.82;0.9%
+<(*,Vomiting,Food_Poisoning) --> is_symptom_of>. %0.82;0.9%
+<(*,Vomiting,Food_Poisoning) --> is_symptom_of>. %0.82;0.9%
+5
+
+// Abdominal Pain is_symptom_of Food Poisoning (conf=0.79, reps=4)
+<(*,Abdominal_Pain,Food_Poisoning) --> is_symptom_of>. %0.79;0.9%
+<(*,Abdominal_Pain,Food_Poisoning) --> is_symptom_of>. %0.79;0.9%
+<(*,Abdominal_Pain,Food_Poisoning) --> is_symptom_of>. %0.79;0.9%
+<(*,Abdominal_Pain,Food_Poisoning) --> is_symptom_of>. %0.79;0.9%
+5
+
+// Food Poisoning caused_by Bacterial Contamination (conf=0.5, reps=1)
+<(*,Food_Poisoning,Bacterial_Contamination) --> caused_by>. %0.5;0.9%
+5
+
+// Food Poisoning treated_with Fluid Replacement (conf=0.91, reps=10)
+<(*,Food_Poisoning,Fluid_Replacement) --> treated_with>. %0.91;0.9%
+<(*,Food_Poisoning,Fluid_Replacement) --> treated_with>. %0.91;0.9%
+<(*,Food_Poisoning,Fluid_Replacement) --> treated_with>. %0.91;0.9%
+<(*,Food_Poisoning,Fluid_Replacement) --> treated_with>. %0.91;0.9%
+<(*,Food_Poisoning,Fluid_Replacement) --> treated_with>. %0.91;0.9%
+<(*,Food_Poisoning,Fluid_Replacement) --> treated_with>. %0.91;0.9%
+<(*,Food_Poisoning,Fluid_Replacement) --> treated_with>. %0.91;0.9%
+<(*,Food_Poisoning,Fluid_Replacement) --> treated_with>. %0.91;0.9%
+<(*,Food_Poisoning,Fluid_Replacement) --> treated_with>. %0.91;0.9%
+<(*,Food_Poisoning,Fluid_Replacement) --> treated_with>. %0.91;0.9%
+5
+
+// Headache is_symptom_of Dehydration (conf=0.48, reps=1)
+<(*,Headache,Dehydration) --> is_symptom_of>. %0.48;0.9%
+5
+
+// Dark Urine is_symptom_of Dehydration (conf=0.34, reps=1)
+<(*,Dark_Urine,Dehydration) --> is_symptom_of>. %0.34;0.9%
+5
+
+// Dehydration treated_with Oral Rehydration Salts (conf=0.9, reps=9)
+<(*,Dehydration,Oral_Rehydration_Salts) --> treated_with>. %0.9;0.9%
+<(*,Dehydration,Oral_Rehydration_Salts) --> treated_with>. %0.9;0.9%
+<(*,Dehydration,Oral_Rehydration_Salts) --> treated_with>. %0.9;0.9%
+<(*,Dehydration,Oral_Rehydration_Salts) --> treated_with>. %0.9;0.9%
+<(*,Dehydration,Oral_Rehydration_Salts) --> treated_with>. %0.9;0.9%
+<(*,Dehydration,Oral_Rehydration_Salts) --> treated_with>. %0.9;0.9%
+<(*,Dehydration,Oral_Rehydration_Salts) --> treated_with>. %0.9;0.9%
+<(*,Dehydration,Oral_Rehydration_Salts) --> treated_with>. %0.9;0.9%
+<(*,Dehydration,Oral_Rehydration_Salts) --> treated_with>. %0.9;0.9%
+5
+
+// Fatigue is_symptom_of Chronic Fatigue Syndrome (conf=0.72, reps=3)
+<(*,Fatigue,Chronic_Fatigue_Syndrome) --> is_symptom_of>. %0.72;0.9%
+<(*,Fatigue,Chronic_Fatigue_Syndrome) --> is_symptom_of>. %0.72;0.9%
+<(*,Fatigue,Chronic_Fatigue_Syndrome) --> is_symptom_of>. %0.72;0.9%
+5
+
+// Muscle Pain is_symptom_of Chronic Fatigue Syndrome (conf=0.63, reps=2)
+<(*,Muscle_Pain,Chronic_Fatigue_Syndrome) --> is_symptom_of>. %0.63;0.9%
+<(*,Muscle_Pain,Chronic_Fatigue_Syndrome) --> is_symptom_of>. %0.63;0.9%
+5
+
+// Poor Sleep is_symptom_of Chronic Fatigue Syndrome (conf=0.56, reps=1)
+<(*,Poor_Sleep,Chronic_Fatigue_Syndrome) --> is_symptom_of>. %0.56;0.9%
+5
+
+// Chronic Fatigue Syndrome treated_with CBT Therapy (conf=0.71, reps=2)
+<(*,Chronic_Fatigue_Syndrome,CBT_Therapy) --> treated_with>. %0.71;0.9%
+<(*,Chronic_Fatigue_Syndrome,CBT_Therapy) --> treated_with>. %0.71;0.9%
+5
+
+// High Blood Pressure is_symptom_of Hypertension (conf=0.83, reps=5)
+<(*,High_Blood_Pressure,Hypertension) --> is_symptom_of>. %0.83;0.9%
+<(*,High_Blood_Pressure,Hypertension) --> is_symptom_of>. %0.83;0.9%
+<(*,High_Blood_Pressure,Hypertension) --> is_symptom_of>. %0.83;0.9%
+<(*,High_Blood_Pressure,Hypertension) --> is_symptom_of>. %0.83;0.9%
+<(*,High_Blood_Pressure,Hypertension) --> is_symptom_of>. %0.83;0.9%
+5
+
+// Headache is_symptom_of Hypertension (conf=0.51, reps=1)
+<(*,Headache,Hypertension) --> is_symptom_of>. %0.51;0.9%
+5
+
+// Hypertension treated_with ACE Inhibitors (conf=0.93, reps=13)
+<(*,Hypertension,ACE_Inhibitors) --> treated_with>. %0.93;0.9%
+<(*,Hypertension,ACE_Inhibitors) --> treated_with>. %0.93;0.9%
+<(*,Hypertension,ACE_Inhibitors) --> treated_with>. %0.93;0.9%
+<(*,Hypertension,ACE_Inhibitors) --> treated_with>. %0.93;0.9%
+<(*,Hypertension,ACE_Inhibitors) --> treated_with>. %0.93;0.9%
+<(*,Hypertension,ACE_Inhibitors) --> treated_with>. %0.93;0.9%
+<(*,Hypertension,ACE_Inhibitors) --> treated_with>. %0.93;0.9%
+<(*,Hypertension,ACE_Inhibitors) --> treated_with>. %0.93;0.9%
+<(*,Hypertension,ACE_Inhibitors) --> treated_with>. %0.93;0.9%
+<(*,Hypertension,ACE_Inhibitors) --> treated_with>. %0.93;0.9%
+<(*,Hypertension,ACE_Inhibitors) --> treated_with>. %0.93;0.9%
+<(*,Hypertension,ACE_Inhibitors) --> treated_with>. %0.93;0.9%
+<(*,Hypertension,ACE_Inhibitors) --> treated_with>. %0.93;0.9%
+5
+
+// Hypertension caused_by Stress (conf=0.58, reps=1)
+<(*,Hypertension,Stress) --> caused_by>. %0.58;0.9%
+5
+
+// Chest Pain is_symptom_of Heart Disease (conf=0.79, reps=4)
+<(*,Chest_Pain,Heart_Disease) --> is_symptom_of>. %0.79;0.9%
+<(*,Chest_Pain,Heart_Disease) --> is_symptom_of>. %0.79;0.9%
+<(*,Chest_Pain,Heart_Disease) --> is_symptom_of>. %0.79;0.9%
+<(*,Chest_Pain,Heart_Disease) --> is_symptom_of>. %0.79;0.9%
+5
+
+// Shortness of Breath is_symptom_of Heart Disease (conf=0.69, reps=2)
+<(*,Shortness_of_Breath,Heart_Disease) --> is_symptom_of>. %0.69;0.9%
+<(*,Shortness_of_Breath,Heart_Disease) --> is_symptom_of>. %0.69;0.9%
+5
+
+// Heart Disease treated_with Beta Blockers (conf=0.92, reps=12)
+<(*,Heart_Disease,Beta_Blockers) --> treated_with>. %0.92;0.9%
+<(*,Heart_Disease,Beta_Blockers) --> treated_with>. %0.92;0.9%
+<(*,Heart_Disease,Beta_Blockers) --> treated_with>. %0.92;0.9%
+<(*,Heart_Disease,Beta_Blockers) --> treated_with>. %0.92;0.9%
+<(*,Heart_Disease,Beta_Blockers) --> treated_with>. %0.92;0.9%
+<(*,Heart_Disease,Beta_Blockers) --> treated_with>. %0.92;0.9%
+<(*,Heart_Disease,Beta_Blockers) --> treated_with>. %0.92;0.9%
+<(*,Heart_Disease,Beta_Blockers) --> treated_with>. %0.92;0.9%
+<(*,Heart_Disease,Beta_Blockers) --> treated_with>. %0.92;0.9%
+<(*,Heart_Disease,Beta_Blockers) --> treated_with>. %0.92;0.9%
+<(*,Heart_Disease,Beta_Blockers) --> treated_with>. %0.92;0.9%
+<(*,Heart_Disease,Beta_Blockers) --> treated_with>. %0.92;0.9%
+5
+
+// Rash is_symptom_of Lyme Disease (conf=0.68, reps=2)
+<(*,Rash,Lyme_Disease) --> is_symptom_of>. %0.68;0.9%
+<(*,Rash,Lyme_Disease) --> is_symptom_of>. %0.68;0.9%
+5
+
+// Fatigue is_symptom_of Lyme Disease (conf=0.59, reps=1)
+<(*,Fatigue,Lyme_Disease) --> is_symptom_of>. %0.59;0.9%
+5
+
+// Joint Pain is_symptom_of Lyme Disease (conf=0.74, reps=3)
+<(*,Joint_Pain,Lyme_Disease) --> is_symptom_of>. %0.74;0.9%
+<(*,Joint_Pain,Lyme_Disease) --> is_symptom_of>. %0.74;0.9%
+<(*,Joint_Pain,Lyme_Disease) --> is_symptom_of>. %0.74;0.9%
+5
+
+// Lyme Disease caused_by Tick Bite (conf=0.95, reps=19)
+<(*,Lyme_Disease,Tick_Bite) --> caused_by>. %0.95;0.9%
+<(*,Lyme_Disease,Tick_Bite) --> caused_by>. %0.95;0.9%
+<(*,Lyme_Disease,Tick_Bite) --> caused_by>. %0.95;0.9%
+<(*,Lyme_Disease,Tick_Bite) --> caused_by>. %0.95;0.9%
+<(*,Lyme_Disease,Tick_Bite) --> caused_by>. %0.95;0.9%
+<(*,Lyme_Disease,Tick_Bite) --> caused_by>. %0.95;0.9%
+<(*,Lyme_Disease,Tick_Bite) --> caused_by>. %0.95;0.9%
+<(*,Lyme_Disease,Tick_Bite) --> caused_by>. %0.95;0.9%
+<(*,Lyme_Disease,Tick_Bite) --> caused_by>. %0.95;0.9%
+<(*,Lyme_Disease,Tick_Bite) --> caused_by>. %0.95;0.9%
+<(*,Lyme_Disease,Tick_Bite) --> caused_by>. %0.95;0.9%
+<(*,Lyme_Disease,Tick_Bite) --> caused_by>. %0.95;0.9%
+<(*,Lyme_Disease,Tick_Bite) --> caused_by>. %0.95;0.9%
+<(*,Lyme_Disease,Tick_Bite) --> caused_by>. %0.95;0.9%
+<(*,Lyme_Disease,Tick_Bite) --> caused_by>. %0.95;0.9%
+<(*,Lyme_Disease,Tick_Bite) --> caused_by>. %0.95;0.9%
+<(*,Lyme_Disease,Tick_Bite) --> caused_by>. %0.95;0.9%
+<(*,Lyme_Disease,Tick_Bite) --> caused_by>. %0.95;0.9%
+<(*,Lyme_Disease,Tick_Bite) --> caused_by>. %0.95;0.9%
+5
+
+// Lyme Disease treated_with Doxycycline (conf=0.91, reps=10)
+<(*,Lyme_Disease,Doxycycline) --> treated_with>. %0.91;0.9%
+<(*,Lyme_Disease,Doxycycline) --> treated_with>. %0.91;0.9%
+<(*,Lyme_Disease,Doxycycline) --> treated_with>. %0.91;0.9%
+<(*,Lyme_Disease,Doxycycline) --> treated_with>. %0.91;0.9%
+<(*,Lyme_Disease,Doxycycline) --> treated_with>. %0.91;0.9%
+<(*,Lyme_Disease,Doxycycline) --> treated_with>. %0.91;0.9%
+<(*,Lyme_Disease,Doxycycline) --> treated_with>. %0.91;0.9%
+<(*,Lyme_Disease,Doxycycline) --> treated_with>. %0.91;0.9%
+<(*,Lyme_Disease,Doxycycline) --> treated_with>. %0.91;0.9%
+<(*,Lyme_Disease,Doxycycline) --> treated_with>. %0.91;0.9%
+5
+
+// Abdominal Pain is_symptom_of IBS (conf=0.61, reps=2)
+<(*,Abdominal_Pain,IBS) --> is_symptom_of>. %0.61;0.9%
+<(*,Abdominal_Pain,IBS) --> is_symptom_of>. %0.61;0.9%
+5
+
+// Bloating is_symptom_of IBS (conf=0.49, reps=1)
+<(*,Bloating,IBS) --> is_symptom_of>. %0.49;0.9%
+5
+
+// IBS treated_with Low FODMAP Diet (conf=0.85, reps=6)
+<(*,IBS,Low_FODMAP_Diet) --> treated_with>. %0.85;0.9%
+<(*,IBS,Low_FODMAP_Diet) --> treated_with>. %0.85;0.9%
+<(*,IBS,Low_FODMAP_Diet) --> treated_with>. %0.85;0.9%
+<(*,IBS,Low_FODMAP_Diet) --> treated_with>. %0.85;0.9%
+<(*,IBS,Low_FODMAP_Diet) --> treated_with>. %0.85;0.9%
+<(*,IBS,Low_FODMAP_Diet) --> treated_with>. %0.85;0.9%
+5
+
+// Cough is_symptom_of Bronchitis (conf=0.77, reps=3)
+<(*,Cough,Bronchitis) --> is_symptom_of>. %0.77;0.9%
+<(*,Cough,Bronchitis) --> is_symptom_of>. %0.77;0.9%
+<(*,Cough,Bronchitis) --> is_symptom_of>. %0.77;0.9%
+5
+
+// Chest Tightness is_symptom_of Bronchitis (conf=0.48, reps=1)
+<(*,Chest_Tightness,Bronchitis) --> is_symptom_of>. %0.48;0.9%
+5
+
+// Bronchitis caused_by Viral Infection (conf=0.63, reps=2)
+<(*,Bronchitis,Viral_Infection) --> caused_by>. %0.63;0.9%
+<(*,Bronchitis,Viral_Infection) --> caused_by>. %0.63;0.9%
+5
+
+// Bronchitis treated_with Cough Suppressants (conf=0.72, reps=3)
+<(*,Bronchitis,Cough_Suppressants) --> treated_with>. %0.72;0.9%
+<(*,Bronchitis,Cough_Suppressants) --> treated_with>. %0.72;0.9%
+<(*,Bronchitis,Cough_Suppressants) --> treated_with>. %0.72;0.9%
+5
+
+// Kidney Pain is_symptom_of Chronic Kidney Disease (conf=0.74, reps=3)
+<(*,Kidney_Pain,Chronic_Kidney_Disease) --> is_symptom_of>. %0.74;0.9%
+<(*,Kidney_Pain,Chronic_Kidney_Disease) --> is_symptom_of>. %0.74;0.9%
+<(*,Kidney_Pain,Chronic_Kidney_Disease) --> is_symptom_of>. %0.74;0.9%
+5
+
+// Fatigue is_symptom_of Chronic Kidney Disease (conf=0.57, reps=1)
+<(*,Fatigue,Chronic_Kidney_Disease) --> is_symptom_of>. %0.57;0.9%
+5
+
+// Chronic Kidney Disease treated_with Dialysis (conf=0.94, reps=16)
+<(*,Chronic_Kidney_Disease,Dialysis) --> treated_with>. %0.94;0.9%
+<(*,Chronic_Kidney_Disease,Dialysis) --> treated_with>. %0.94;0.9%
+<(*,Chronic_Kidney_Disease,Dialysis) --> treated_with>. %0.94;0.9%
+<(*,Chronic_Kidney_Disease,Dialysis) --> treated_with>. %0.94;0.9%
+<(*,Chronic_Kidney_Disease,Dialysis) --> treated_with>. %0.94;0.9%
+<(*,Chronic_Kidney_Disease,Dialysis) --> treated_with>. %0.94;0.9%
+<(*,Chronic_Kidney_Disease,Dialysis) --> treated_with>. %0.94;0.9%
+<(*,Chronic_Kidney_Disease,Dialysis) --> treated_with>. %0.94;0.9%
+<(*,Chronic_Kidney_Disease,Dialysis) --> treated_with>. %0.94;0.9%
+<(*,Chronic_Kidney_Disease,Dialysis) --> treated_with>. %0.94;0.9%
+<(*,Chronic_Kidney_Disease,Dialysis) --> treated_with>. %0.94;0.9%
+<(*,Chronic_Kidney_Disease,Dialysis) --> treated_with>. %0.94;0.9%
+<(*,Chronic_Kidney_Disease,Dialysis) --> treated_with>. %0.94;0.9%
+<(*,Chronic_Kidney_Disease,Dialysis) --> treated_with>. %0.94;0.9%
+<(*,Chronic_Kidney_Disease,Dialysis) --> treated_with>. %0.94;0.9%
+<(*,Chronic_Kidney_Disease,Dialysis) --> treated_with>. %0.94;0.9%
+5
+
+// Nausea is_symptom_of Ulcer (conf=0.36, reps=1)
+<(*,Nausea,Ulcer) --> is_symptom_of>. %0.36;0.9%
+5
+
+// Stomach Burning is_symptom_of Ulcer (conf=0.83, reps=5)
+<(*,Stomach_Burning,Ulcer) --> is_symptom_of>. %0.83;0.9%
+<(*,Stomach_Burning,Ulcer) --> is_symptom_of>. %0.83;0.9%
+<(*,Stomach_Burning,Ulcer) --> is_symptom_of>. %0.83;0.9%
+<(*,Stomach_Burning,Ulcer) --> is_symptom_of>. %0.83;0.9%
+<(*,Stomach_Burning,Ulcer) --> is_symptom_of>. %0.83;0.9%
+5
+
+// Ulcer caused_by H. Pylori Infection (conf=0.92, reps=12)
+<(*,Ulcer,H__Pylori_Infection) --> caused_by>. %0.92;0.9%
+<(*,Ulcer,H__Pylori_Infection) --> caused_by>. %0.92;0.9%
+<(*,Ulcer,H__Pylori_Infection) --> caused_by>. %0.92;0.9%
+<(*,Ulcer,H__Pylori_Infection) --> caused_by>. %0.92;0.9%
+<(*,Ulcer,H__Pylori_Infection) --> caused_by>. %0.92;0.9%
+<(*,Ulcer,H__Pylori_Infection) --> caused_by>. %0.92;0.9%
+<(*,Ulcer,H__Pylori_Infection) --> caused_by>. %0.92;0.9%
+<(*,Ulcer,H__Pylori_Infection) --> caused_by>. %0.92;0.9%
+<(*,Ulcer,H__Pylori_Infection) --> caused_by>. %0.92;0.9%
+<(*,Ulcer,H__Pylori_Infection) --> caused_by>. %0.92;0.9%
+<(*,Ulcer,H__Pylori_Infection) --> caused_by>. %0.92;0.9%
+<(*,Ulcer,H__Pylori_Infection) --> caused_by>. %0.92;0.9%
+5
+
+// Ulcer treated_with Proton Pump Inhibitors (conf=0.89, reps=8)
+<(*,Ulcer,Proton_Pump_Inhibitors) --> treated_with>. %0.89;0.9%
+<(*,Ulcer,Proton_Pump_Inhibitors) --> treated_with>. %0.89;0.9%
+<(*,Ulcer,Proton_Pump_Inhibitors) --> treated_with>. %0.89;0.9%
+<(*,Ulcer,Proton_Pump_Inhibitors) --> treated_with>. %0.89;0.9%
+<(*,Ulcer,Proton_Pump_Inhibitors) --> treated_with>. %0.89;0.9%
+<(*,Ulcer,Proton_Pump_Inhibitors) --> treated_with>. %0.89;0.9%
+<(*,Ulcer,Proton_Pump_Inhibitors) --> treated_with>. %0.89;0.9%
+<(*,Ulcer,Proton_Pump_Inhibitors) --> treated_with>. %0.89;0.9%
+5
+
+// Runny Nose is_symptom_of Common Cold (conf=0.73, reps=3)
+<(*,Runny_Nose,Common_Cold) --> is_symptom_of>. %0.73;0.9%
+<(*,Runny_Nose,Common_Cold) --> is_symptom_of>. %0.73;0.9%
+<(*,Runny_Nose,Common_Cold) --> is_symptom_of>. %0.73;0.9%
+5
+
+// Sneezing is_symptom_of Common Cold (conf=0.69, reps=2)
+<(*,Sneezing,Common_Cold) --> is_symptom_of>. %0.69;0.9%
+<(*,Sneezing,Common_Cold) --> is_symptom_of>. %0.69;0.9%
+5
+
+// Cough is_symptom_of Common Cold (conf=0.75, reps=3)
+<(*,Cough,Common_Cold) --> is_symptom_of>. %0.75;0.9%
+<(*,Cough,Common_Cold) --> is_symptom_of>. %0.75;0.9%
+<(*,Cough,Common_Cold) --> is_symptom_of>. %0.75;0.9%
+5
+
+// Common Cold treated_with Rest (conf=0.84, reps=5)
+<(*,Common_Cold,Rest) --> treated_with>. %0.84;0.9%
+<(*,Common_Cold,Rest) --> treated_with>. %0.84;0.9%
+<(*,Common_Cold,Rest) --> treated_with>. %0.84;0.9%
+<(*,Common_Cold,Rest) --> treated_with>. %0.84;0.9%
+<(*,Common_Cold,Rest) --> treated_with>. %0.84;0.9%
+5
+
+// Fatigue is_symptom_of Mononucleosis (conf=0.81, reps=4)
+<(*,Fatigue,Mononucleosis) --> is_symptom_of>. %0.81;0.9%
+<(*,Fatigue,Mononucleosis) --> is_symptom_of>. %0.81;0.9%
+<(*,Fatigue,Mononucleosis) --> is_symptom_of>. %0.81;0.9%
+<(*,Fatigue,Mononucleosis) --> is_symptom_of>. %0.81;0.9%
+5
+
+// Sore Throat is_symptom_of Mononucleosis (conf=0.75, reps=3)
+<(*,Sore_Throat,Mononucleosis) --> is_symptom_of>. %0.75;0.9%
+<(*,Sore_Throat,Mononucleosis) --> is_symptom_of>. %0.75;0.9%
+<(*,Sore_Throat,Mononucleosis) --> is_symptom_of>. %0.75;0.9%
+5
+
+// Swollen Lymph Nodes is_symptom_of Mononucleosis (conf=0.78, reps=4)
+<(*,Swollen_Lymph_Nodes,Mononucleosis) --> is_symptom_of>. %0.78;0.9%
+<(*,Swollen_Lymph_Nodes,Mononucleosis) --> is_symptom_of>. %0.78;0.9%
+<(*,Swollen_Lymph_Nodes,Mononucleosis) --> is_symptom_of>. %0.78;0.9%
+<(*,Swollen_Lymph_Nodes,Mononucleosis) --> is_symptom_of>. %0.78;0.9%
+5
+
+// Mononucleosis treated_with Fluids (conf=0.86, reps=6)
+<(*,Mononucleosis,Fluids) --> treated_with>. %0.86;0.9%
+<(*,Mononucleosis,Fluids) --> treated_with>. %0.86;0.9%
+<(*,Mononucleosis,Fluids) --> treated_with>. %0.86;0.9%
+<(*,Mononucleosis,Fluids) --> treated_with>. %0.86;0.9%
+<(*,Mononucleosis,Fluids) --> treated_with>. %0.86;0.9%
+<(*,Mononucleosis,Fluids) --> treated_with>. %0.86;0.9%
+5
+
+// Wheezing is_symptom_of Air Pollution Exposure (conf=0.42, reps=1)
+<(*,Wheezing,Air_Pollution_Exposure) --> is_symptom_of>. %0.42;0.9%
+5
+
+// Cough is_symptom_of Air Pollution Exposure (conf=0.39, reps=1)
+<(*,Cough,Air_Pollution_Exposure) --> is_symptom_of>. %0.39;0.9%
+5
+
+// Air Pollution Exposure caused_by Environmental Factors (conf=0.72, reps=3)
+<(*,Air_Pollution_Exposure,Environmental_Factors) --> caused_by>. %0.72;0.9%
+<(*,Air_Pollution_Exposure,Environmental_Factors) --> caused_by>. %0.72;0.9%
+<(*,Air_Pollution_Exposure,Environmental_Factors) --> caused_by>. %0.72;0.9%
+5
+
+
+// ============================================================
+// SECTION 3: CONCEPT QUERIES
+// ============================================================
+
+// ============================================================
+// CONCEPT BAG QUERY BLOCK
+// Run after full dataset load to capture belief state per concept
+// ============================================================
+
+// --- Influenza ---
+<Influenza --> ?x>?
+10
+<?x --> Influenza>?
+10
+<(*,Influenza,?x) --> ?r>?
+10
+<(*,?x,Influenza) --> ?r>?
+10
+
+// --- Pneumonia ---
+<Pneumonia --> ?x>?
+10
+<?x --> Pneumonia>?
+10
+<(*,Pneumonia,?x) --> ?r>?
+10
+<(*,?x,Pneumonia) --> ?r>?
+10
+
+// --- Migraine ---
+<Migraine --> ?x>?
+10
+<?x --> Migraine>?
+10
+<(*,Migraine,?x) --> ?r>?
+10
+<(*,?x,Migraine) --> ?r>?
+10
+
+// --- Anemia ---
+<Anemia --> ?x>?
+10
+<?x --> Anemia>?
+10
+<(*,Anemia,?x) --> ?r>?
+10
+<(*,?x,Anemia) --> ?r>?
+10
+
+// --- Rheumatoid_Arthritis ---
+<Rheumatoid_Arthritis --> ?x>?
+10
+<?x --> Rheumatoid_Arthritis>?
+10
+<(*,Rheumatoid_Arthritis,?x) --> ?r>?
+10
+<(*,?x,Rheumatoid_Arthritis) --> ?r>?
+10
+
+// --- COVID_19 ---
+<COVID_19 --> ?x>?
+10
+<?x --> COVID_19>?
+10
+<(*,COVID_19,?x) --> ?r>?
+10
+<(*,?x,COVID_19) --> ?r>?
+10
+
+// --- Strep_Throat ---
+<Strep_Throat --> ?x>?
+10
+<?x --> Strep_Throat>?
+10
+<(*,Strep_Throat,?x) --> ?r>?
+10
+<(*,?x,Strep_Throat) --> ?r>?
+10
+
+// --- Seasonal_Allergies ---
+<Seasonal_Allergies --> ?x>?
+10
+<?x --> Seasonal_Allergies>?
+10
+<(*,Seasonal_Allergies,?x) --> ?r>?
+10
+<(*,?x,Seasonal_Allergies) --> ?r>?
+10
+
+// --- Asthma ---
+<Asthma --> ?x>?
+10
+<?x --> Asthma>?
+10
+<(*,Asthma,?x) --> ?r>?
+10
+<(*,?x,Asthma) --> ?r>?
+10
+
+// --- Food_Poisoning ---
+<Food_Poisoning --> ?x>?
+10
+<?x --> Food_Poisoning>?
+10
+<(*,Food_Poisoning,?x) --> ?r>?
+10
+<(*,?x,Food_Poisoning) --> ?r>?
+10
+
+// --- Dehydration ---
+<Dehydration --> ?x>?
+10
+<?x --> Dehydration>?
+10
+<(*,Dehydration,?x) --> ?r>?
+10
+<(*,?x,Dehydration) --> ?r>?
+10
+
+// --- Chronic_Fatigue_Syndrome ---
+<Chronic_Fatigue_Syndrome --> ?x>?
+10
+<?x --> Chronic_Fatigue_Syndrome>?
+10
+<(*,Chronic_Fatigue_Syndrome,?x) --> ?r>?
+10
+<(*,?x,Chronic_Fatigue_Syndrome) --> ?r>?
+10
+
+// --- Hypertension ---
+<Hypertension --> ?x>?
+10
+<?x --> Hypertension>?
+10
+<(*,Hypertension,?x) --> ?r>?
+10
+<(*,?x,Hypertension) --> ?r>?
+10
+
+// --- Heart_Disease ---
+<Heart_Disease --> ?x>?
+10
+<?x --> Heart_Disease>?
+10
+<(*,Heart_Disease,?x) --> ?r>?
+10
+<(*,?x,Heart_Disease) --> ?r>?
+10
+
+// --- Lyme_Disease ---
+<Lyme_Disease --> ?x>?
+10
+<?x --> Lyme_Disease>?
+10
+<(*,Lyme_Disease,?x) --> ?r>?
+10
+<(*,?x,Lyme_Disease) --> ?r>?
+10
+
+// --- IBS ---
+<IBS --> ?x>?
+10
+<?x --> IBS>?
+10
+<(*,IBS,?x) --> ?r>?
+10
+<(*,?x,IBS) --> ?r>?
+10
+
+// --- Bronchitis ---
+<Bronchitis --> ?x>?
+10
+<?x --> Bronchitis>?
+10
+<(*,Bronchitis,?x) --> ?r>?
+10
+<(*,?x,Bronchitis) --> ?r>?
+10
+
+// --- Chronic_Kidney_Disease ---
+<Chronic_Kidney_Disease --> ?x>?
+10
+<?x --> Chronic_Kidney_Disease>?
+10
+<(*,Chronic_Kidney_Disease,?x) --> ?r>?
+10
+<(*,?x,Chronic_Kidney_Disease) --> ?r>?
+10
+
+// --- Ulcer ---
+<Ulcer --> ?x>?
+10
+<?x --> Ulcer>?
+10
+<(*,Ulcer,?x) --> ?r>?
+10
+<(*,?x,Ulcer) --> ?r>?
+10
+
+// --- Common_Cold ---
+<Common_Cold --> ?x>?
+10
+<?x --> Common_Cold>?
+10
+<(*,Common_Cold,?x) --> ?r>?
+10
+<(*,?x,Common_Cold) --> ?r>?
+10
+
+// --- Mononucleosis ---
+<Mononucleosis --> ?x>?
+10
+<?x --> Mononucleosis>?
+10
+<(*,Mononucleosis,?x) --> ?r>?
+10
+<(*,?x,Mononucleosis) --> ?r>?
+10
+
+// --- Air_Pollution_Exposure ---
+<Air_Pollution_Exposure --> ?x>?
+10
+<?x --> Air_Pollution_Exposure>?
+10
+<(*,Air_Pollution_Exposure,?x) --> ?r>?
+10
+<(*,?x,Air_Pollution_Exposure) --> ?r>?
+10

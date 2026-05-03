@@ -8,9 +8,9 @@ def main():
 
     neo4j = Neo4jConnection(uri="neo4j://127.0.0.1:7687", user="neo4j", password="password")
     # neo4j = Neo4jConnection(
-    #     uri="neo4j+s://90a9ceff.databases.neo4j.io",
-    #     user="90a9ceff",
-    #     password="bAiVzMxJ86AsbyKse_HByXgskxKZQOcGG9mwqGcnJQM"
+    #     uri="neo4j+s://dd4c53be.databases.neo4j.io",
+    #     user="dd4c53be",
+    #     password="Wf6HZUQz1XOQXA7lMpTxU0g522FZRBlR1XCArZ6ztdI"
     # )
     bkg = BayesianKG(prior_strength=0.5, max_scale=6.0)
 
@@ -24,10 +24,14 @@ def main():
             bkg.edge_beliefs[key] = (rel["alpha"],rel["beta"])
 
     BASE_DIR = Path(__file__).resolve().parent      # MAIN/project
-    csv_path = BASE_DIR.parent / "data" / "MedData.csv"  # MAIN/data/csv
-    # csv_path = BASE_DIR.parent / "data" / "val.tsv"
+    # csv_path = BASE_DIR.parent / "data" / "MedData.csv"  # MAIN/data/csv
+    # csv_path = BASE_DIR.parent / "data" / "experiments" / "MedData_minimal_contradiction.csv"
+    csv_path = BASE_DIR.parent / "data" / "experiments" / "exp1b_reversed.csv"
     df = pd.read_csv(csv_path)
+
+    # csv_path = BASE_DIR.parent / "data" / "CN15k" / "val_decoded.tsv"
     # df = pd.read_csv(csv_path, sep='\t')
+    # df = df[:100]
 
     for row in df.itertuples(index=False):
         subj = row.Subject

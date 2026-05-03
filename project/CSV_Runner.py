@@ -6,7 +6,9 @@ def main():
     bkg = BayesianKG(prior_strength=0.5, max_scale=6.0)
 
     BASE_DIR = Path(__file__).resolve().parent      # MAIN/project
-    csv_path = BASE_DIR.parent / "data" / "MedData.csv"  # MAIN/data/csv
+    # csv_path = BASE_DIR.parent / "data" / "MedData.csv"  # MAIN/data/csv
+    csv_path = BASE_DIR.parent / "data" / "experiments" / "exp1c_clustered.csv"
+    # csv_path = BASE_DIR.parent / "data" / "experiments" / "MedData_minimal.csv"
     df = pd.read_csv(csv_path)
 
     #---------------------

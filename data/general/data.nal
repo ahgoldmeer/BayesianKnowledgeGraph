@@ -1,0 +1,38 @@
+<(*, Fever, Influenza) --> is_symptom_of>. %0.78;0.9%
+5
+<(*, Cough, Influenza) --> is_symptom_of>. %0.72;0.9%
+5
+<(*, Fatigue, Influenza) --> is_symptom_of>. %0.83;0.9%
+5
+<(*, Influenza, Oseltamivir) --> treated_with>. %0.93;0.9%
+5
+<(*, Body_Aches, Influenza) --> is_symptom_of>. %0.69;0.9%
+5
+<(*, Shortness_of_Breath, Pneumonia) --> is_symptom_of>. %0.88;0.9%
+5
+<(*, Chest_Pain, Pneumonia) --> is_symptom_of>. %0.47;0.9%
+5
+<(*, Fever, Pneumonia) --> is_symptom_of>. %0.76;0.9%
+5
+<(*, Pneumonia, Antibiotics) --> treated_with>. %0.91;0.9%
+5
+<(*, Pneumonia, Bacterial_Infection) --> caused_by>. %0.82;0.9%
+5
+<(*, Headache, Migraine) --> is_symptom_of>. %0.89;0.9%
+5
+<(*, Nausea, Migraine) --> is_symptom_of>. %0.41;0.9%
+5
+<(*, Light_Sensitivity, Migraine) --> is_symptom_of>. %0.67;0.9%
+5
+<(*, Migraine, Triptans) --> treated_with>. %0.92;0.9%
+5
+<(*, Fatigue, Anemia) --> is_symptom_of>. %0.54;0.9%
+5
+<(*, Pale_Skin, Anemia) --> is_symptom_of>. %0.36;0.9%
+5
+<(*, Dizziness, Anemia) --> is_symptom_of>. %0.43;0.9%
+5
+<(*, Anemia, Iron_Deficiency) --> caused_by>. %0.87;0.9%
+5
+<(*, Anemia, Iron_Supplements) --> treated_with>. %0.95;0.9%
+5
