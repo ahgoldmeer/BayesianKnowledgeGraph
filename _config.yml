@@ -1,0 +1,9 @@
+theme: slate
+title: Bayesian Knowledge Graph
+description: A small academic project site for the Bayesian Knowledge Graph capstone.
+
+defaults:
+  - scope:
+      path: ""
+    values:
+      layout: default
