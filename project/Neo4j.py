@@ -15,8 +15,8 @@ class Neo4jConnection:
                 lambda tx: tx.run(
                     """
                     MERGE (n:Entity {name: $name})
-                    SET n.alpha = $alpha,
-                        n.beta = $beta,
+                    SET n.alpha = coalesce(n.alpha, 0) + $alpha,
+                        n.beta = coalesce(n.beta, 0) + $beta,
                         n.reliability = $reliability,
                         n.color = $color,
                         n.size = $size
@@ -38,8 +38,8 @@ class Neo4jConnection:
                     MATCH (s:Entity {name: $subj})
                     MATCH (o:Entity {name: $obj})
                     MERGE (s)-[r:RELATION {predicate: $pred}]->(o)
-                    SET r.alpha = $alpha,
-                        r.beta = $beta,
+                    SET r.alpha = coalesce(r.alpha, 0) + $alpha,
+                        r.beta = coalesce(r.beta, 0) + $beta,
                         r.confidence = $confidence,
                         r.original_confidence = $original_confidence,
                         r.uncertainty = $uncertainty,
@@ -92,6 +92,11 @@ class Neo4jConnection:
         with self.driver.session() as session:
             result = session.run("MATCH (n:Entity) RETURN n")
             return [record["n"] for record in result]
+        
+    def get_all_relations(self):
+        with self.driver.session() as session:
+            result = session.run("MATCH ()-[r:RELATION]->() RETURN r")
+            return [record["r"] for record in result]
     
     def get_belief_trajectory(self, subj, pred, obj):
         with self.driver.session() as session:

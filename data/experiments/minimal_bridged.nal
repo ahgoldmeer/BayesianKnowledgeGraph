@@ -1,0 +1,327 @@
+// MINIMAL DATASET - Bridging Rule Version
+// Bridging rules loaded FIRST to prevent relation collapse
+
+// ============================================================
+// SECTION 1: BRIDGING RULES
+// ============================================================
+
+// Align product <-> relational image for: caused_by
+<<(*,?x,?y) --> caused_by> ==> <?x --> (/, caused_by,_,?y)>>.
+<<(?x --> (/, caused_by,_,?y))> ==> <(*,?x,?y) --> caused_by>>.
+5
+
+// Align product <-> relational image for: is_symptom_of
+<<(*,?x,?y) --> is_symptom_of> ==> <?x --> (/, is_symptom_of,_,?y)>>.
+<<(?x --> (/, is_symptom_of,_,?y))> ==> <(*,?x,?y) --> is_symptom_of>>.
+5
+
+// Align product <-> relational image for: treated_with
+<<(*,?x,?y) --> treated_with> ==> <?x --> (/, treated_with,_,?y)>>.
+<<(?x --> (/, treated_with,_,?y))> ==> <(*,?x,?y) --> treated_with>>.
+5
+
+// ============================================================
+// SECTION 2: DATA
+// ============================================================
+
+// Minimal Dataset Data
+// Frequency = original confidence value
+// Repetitions = derived from confidence via n = c / (1 - c)
+// 5 cycles between concept groups
+
+// Fever is_symptom_of Influenza (conf=0.78, reps=4)
+<(*,Fever,Influenza) --> is_symptom_of>. %0.78;0.9%
+<(*,Fever,Influenza) --> is_symptom_of>. %0.78;0.9%
+<(*,Fever,Influenza) --> is_symptom_of>. %0.78;0.9%
+<(*,Fever,Influenza) --> is_symptom_of>. %0.78;0.9%
+5
+
+// Cough is_symptom_of Influenza (conf=0.72, reps=3)
+<(*,Cough,Influenza) --> is_symptom_of>. %0.72;0.9%
+<(*,Cough,Influenza) --> is_symptom_of>. %0.72;0.9%
+<(*,Cough,Influenza) --> is_symptom_of>. %0.72;0.9%
+5
+
+// Fatigue is_symptom_of Influenza (conf=0.83, reps=5)
+<(*,Fatigue,Influenza) --> is_symptom_of>. %0.83;0.9%
+<(*,Fatigue,Influenza) --> is_symptom_of>. %0.83;0.9%
+<(*,Fatigue,Influenza) --> is_symptom_of>. %0.83;0.9%
+<(*,Fatigue,Influenza) --> is_symptom_of>. %0.83;0.9%
+<(*,Fatigue,Influenza) --> is_symptom_of>. %0.83;0.9%
+5
+
+// Influenza treated_with Oseltamivir (conf=0.93, reps=13)
+<(*,Influenza,Oseltamivir) --> treated_with>. %0.93;0.9%
+<(*,Influenza,Oseltamivir) --> treated_with>. %0.93;0.9%
+<(*,Influenza,Oseltamivir) --> treated_with>. %0.93;0.9%
+<(*,Influenza,Oseltamivir) --> treated_with>. %0.93;0.9%
+<(*,Influenza,Oseltamivir) --> treated_with>. %0.93;0.9%
+<(*,Influenza,Oseltamivir) --> treated_with>. %0.93;0.9%
+<(*,Influenza,Oseltamivir) --> treated_with>. %0.93;0.9%
+<(*,Influenza,Oseltamivir) --> treated_with>. %0.93;0.9%
+<(*,Influenza,Oseltamivir) --> treated_with>. %0.93;0.9%
+<(*,Influenza,Oseltamivir) --> treated_with>. %0.93;0.9%
+<(*,Influenza,Oseltamivir) --> treated_with>. %0.93;0.9%
+<(*,Influenza,Oseltamivir) --> treated_with>. %0.93;0.9%
+<(*,Influenza,Oseltamivir) --> treated_with>. %0.93;0.9%
+5
+
+// Influenza caused_by Viral_Infection (conf=0.91, reps=10)
+<(*,Influenza,Viral_Infection) --> caused_by>. %0.91;0.9%
+<(*,Influenza,Viral_Infection) --> caused_by>. %0.91;0.9%
+<(*,Influenza,Viral_Infection) --> caused_by>. %0.91;0.9%
+<(*,Influenza,Viral_Infection) --> caused_by>. %0.91;0.9%
+<(*,Influenza,Viral_Infection) --> caused_by>. %0.91;0.9%
+<(*,Influenza,Viral_Infection) --> caused_by>. %0.91;0.9%
+<(*,Influenza,Viral_Infection) --> caused_by>. %0.91;0.9%
+<(*,Influenza,Viral_Infection) --> caused_by>. %0.91;0.9%
+<(*,Influenza,Viral_Infection) --> caused_by>. %0.91;0.9%
+<(*,Influenza,Viral_Infection) --> caused_by>. %0.91;0.9%
+5
+
+// Shortness_of_Breath is_symptom_of Pneumonia (conf=0.88, reps=7)
+<(*,Shortness_of_Breath,Pneumonia) --> is_symptom_of>. %0.88;0.9%
+<(*,Shortness_of_Breath,Pneumonia) --> is_symptom_of>. %0.88;0.9%
+<(*,Shortness_of_Breath,Pneumonia) --> is_symptom_of>. %0.88;0.9%
+<(*,Shortness_of_Breath,Pneumonia) --> is_symptom_of>. %0.88;0.9%
+<(*,Shortness_of_Breath,Pneumonia) --> is_symptom_of>. %0.88;0.9%
+<(*,Shortness_of_Breath,Pneumonia) --> is_symptom_of>. %0.88;0.9%
+<(*,Shortness_of_Breath,Pneumonia) --> is_symptom_of>. %0.88;0.9%
+5
+
+// Chest_Pain is_symptom_of Pneumonia (conf=0.47, reps=1)
+<(*,Chest_Pain,Pneumonia) --> is_symptom_of>. %0.47;0.9%
+5
+
+// Fever is_symptom_of Pneumonia (conf=0.76, reps=3)
+<(*,Fever,Pneumonia) --> is_symptom_of>. %0.76;0.9%
+<(*,Fever,Pneumonia) --> is_symptom_of>. %0.76;0.9%
+<(*,Fever,Pneumonia) --> is_symptom_of>. %0.76;0.9%
+5
+
+// Pneumonia treated_with Antibiotics (conf=0.91, reps=10)
+<(*,Pneumonia,Antibiotics) --> treated_with>. %0.91;0.9%
+<(*,Pneumonia,Antibiotics) --> treated_with>. %0.91;0.9%
+<(*,Pneumonia,Antibiotics) --> treated_with>. %0.91;0.9%
+<(*,Pneumonia,Antibiotics) --> treated_with>. %0.91;0.9%
+<(*,Pneumonia,Antibiotics) --> treated_with>. %0.91;0.9%
+<(*,Pneumonia,Antibiotics) --> treated_with>. %0.91;0.9%
+<(*,Pneumonia,Antibiotics) --> treated_with>. %0.91;0.9%
+<(*,Pneumonia,Antibiotics) --> treated_with>. %0.91;0.9%
+<(*,Pneumonia,Antibiotics) --> treated_with>. %0.91;0.9%
+<(*,Pneumonia,Antibiotics) --> treated_with>. %0.91;0.9%
+5
+
+// Pneumonia caused_by Bacterial_Infection (conf=0.82, reps=5)
+<(*,Pneumonia,Bacterial_Infection) --> caused_by>. %0.82;0.9%
+<(*,Pneumonia,Bacterial_Infection) --> caused_by>. %0.82;0.9%
+<(*,Pneumonia,Bacterial_Infection) --> caused_by>. %0.82;0.9%
+<(*,Pneumonia,Bacterial_Infection) --> caused_by>. %0.82;0.9%
+<(*,Pneumonia,Bacterial_Infection) --> caused_by>. %0.82;0.9%
+5
+
+// Headache is_symptom_of Migraine (conf=0.89, reps=8)
+<(*,Headache,Migraine) --> is_symptom_of>. %0.89;0.9%
+<(*,Headache,Migraine) --> is_symptom_of>. %0.89;0.9%
+<(*,Headache,Migraine) --> is_symptom_of>. %0.89;0.9%
+<(*,Headache,Migraine) --> is_symptom_of>. %0.89;0.9%
+<(*,Headache,Migraine) --> is_symptom_of>. %0.89;0.9%
+<(*,Headache,Migraine) --> is_symptom_of>. %0.89;0.9%
+<(*,Headache,Migraine) --> is_symptom_of>. %0.89;0.9%
+<(*,Headache,Migraine) --> is_symptom_of>. %0.89;0.9%
+5
+
+// Nausea is_symptom_of Migraine (conf=0.41, reps=1)
+<(*,Nausea,Migraine) --> is_symptom_of>. %0.41;0.9%
+5
+
+// Light_Sensitivity is_symptom_of Migraine (conf=0.67, reps=2)
+<(*,Light_Sensitivity,Migraine) --> is_symptom_of>. %0.67;0.9%
+<(*,Light_Sensitivity,Migraine) --> is_symptom_of>. %0.67;0.9%
+5
+
+// Migraine treated_with Triptans (conf=0.92, reps=12)
+<(*,Migraine,Triptans) --> treated_with>. %0.92;0.9%
+<(*,Migraine,Triptans) --> treated_with>. %0.92;0.9%
+<(*,Migraine,Triptans) --> treated_with>. %0.92;0.9%
+<(*,Migraine,Triptans) --> treated_with>. %0.92;0.9%
+<(*,Migraine,Triptans) --> treated_with>. %0.92;0.9%
+<(*,Migraine,Triptans) --> treated_with>. %0.92;0.9%
+<(*,Migraine,Triptans) --> treated_with>. %0.92;0.9%
+<(*,Migraine,Triptans) --> treated_with>. %0.92;0.9%
+<(*,Migraine,Triptans) --> treated_with>. %0.92;0.9%
+<(*,Migraine,Triptans) --> treated_with>. %0.92;0.9%
+<(*,Migraine,Triptans) --> treated_with>. %0.92;0.9%
+<(*,Migraine,Triptans) --> treated_with>. %0.92;0.9%
+5
+
+// Fatigue is_symptom_of Anemia (conf=0.54, reps=1)
+<(*,Fatigue,Anemia) --> is_symptom_of>. %0.54;0.9%
+5
+
+// Pale_Skin is_symptom_of Anemia (conf=0.36, reps=1)
+<(*,Pale_Skin,Anemia) --> is_symptom_of>. %0.36;0.9%
+5
+
+// Dizziness is_symptom_of Anemia (conf=0.43, reps=1)
+<(*,Dizziness,Anemia) --> is_symptom_of>. %0.43;0.9%
+5
+
+// Anemia caused_by Iron_Deficiency (conf=0.87, reps=7)
+<(*,Anemia,Iron_Deficiency) --> caused_by>. %0.87;0.9%
+<(*,Anemia,Iron_Deficiency) --> caused_by>. %0.87;0.9%
+<(*,Anemia,Iron_Deficiency) --> caused_by>. %0.87;0.9%
+<(*,Anemia,Iron_Deficiency) --> caused_by>. %0.87;0.9%
+<(*,Anemia,Iron_Deficiency) --> caused_by>. %0.87;0.9%
+<(*,Anemia,Iron_Deficiency) --> caused_by>. %0.87;0.9%
+<(*,Anemia,Iron_Deficiency) --> caused_by>. %0.87;0.9%
+5
+
+// Anemia treated_with Iron_Supplements (conf=0.95, reps=19)
+<(*,Anemia,Iron_Supplements) --> treated_with>. %0.95;0.9%
+<(*,Anemia,Iron_Supplements) --> treated_with>. %0.95;0.9%
+<(*,Anemia,Iron_Supplements) --> treated_with>. %0.95;0.9%
+<(*,Anemia,Iron_Supplements) --> treated_with>. %0.95;0.9%
+<(*,Anemia,Iron_Supplements) --> treated_with>. %0.95;0.9%
+<(*,Anemia,Iron_Supplements) --> treated_with>. %0.95;0.9%
+<(*,Anemia,Iron_Supplements) --> treated_with>. %0.95;0.9%
+<(*,Anemia,Iron_Supplements) --> treated_with>. %0.95;0.9%
+<(*,Anemia,Iron_Supplements) --> treated_with>. %0.95;0.9%
+<(*,Anemia,Iron_Supplements) --> treated_with>. %0.95;0.9%
+<(*,Anemia,Iron_Supplements) --> treated_with>. %0.95;0.9%
+<(*,Anemia,Iron_Supplements) --> treated_with>. %0.95;0.9%
+<(*,Anemia,Iron_Supplements) --> treated_with>. %0.95;0.9%
+<(*,Anemia,Iron_Supplements) --> treated_with>. %0.95;0.9%
+<(*,Anemia,Iron_Supplements) --> treated_with>. %0.95;0.9%
+<(*,Anemia,Iron_Supplements) --> treated_with>. %0.95;0.9%
+<(*,Anemia,Iron_Supplements) --> treated_with>. %0.95;0.9%
+<(*,Anemia,Iron_Supplements) --> treated_with>. %0.95;0.9%
+<(*,Anemia,Iron_Supplements) --> treated_with>. %0.95;0.9%
+5
+
+// Fever is_symptom_of COVID-19 (conf=0.84, reps=5)
+<(*,Fever,COVID_19) --> is_symptom_of>. %0.84;0.9%
+<(*,Fever,COVID_19) --> is_symptom_of>. %0.84;0.9%
+<(*,Fever,COVID_19) --> is_symptom_of>. %0.84;0.9%
+<(*,Fever,COVID_19) --> is_symptom_of>. %0.84;0.9%
+<(*,Fever,COVID_19) --> is_symptom_of>. %0.84;0.9%
+5
+
+// Cough is_symptom_of COVID-19 (conf=0.79, reps=4)
+<(*,Cough,COVID_19) --> is_symptom_of>. %0.79;0.9%
+<(*,Cough,COVID_19) --> is_symptom_of>. %0.79;0.9%
+<(*,Cough,COVID_19) --> is_symptom_of>. %0.79;0.9%
+<(*,Cough,COVID_19) --> is_symptom_of>. %0.79;0.9%
+5
+
+// Fatigue is_symptom_of COVID-19 (conf=0.66, reps=2)
+<(*,Fatigue,COVID_19) --> is_symptom_of>. %0.66;0.9%
+<(*,Fatigue,COVID_19) --> is_symptom_of>. %0.66;0.9%
+5
+
+// Loss_of_Smell is_symptom_of COVID-19 (conf=0.93, reps=13)
+<(*,Loss_of_Smell,COVID_19) --> is_symptom_of>. %0.93;0.9%
+<(*,Loss_of_Smell,COVID_19) --> is_symptom_of>. %0.93;0.9%
+<(*,Loss_of_Smell,COVID_19) --> is_symptom_of>. %0.93;0.9%
+<(*,Loss_of_Smell,COVID_19) --> is_symptom_of>. %0.93;0.9%
+<(*,Loss_of_Smell,COVID_19) --> is_symptom_of>. %0.93;0.9%
+<(*,Loss_of_Smell,COVID_19) --> is_symptom_of>. %0.93;0.9%
+<(*,Loss_of_Smell,COVID_19) --> is_symptom_of>. %0.93;0.9%
+<(*,Loss_of_Smell,COVID_19) --> is_symptom_of>. %0.93;0.9%
+<(*,Loss_of_Smell,COVID_19) --> is_symptom_of>. %0.93;0.9%
+<(*,Loss_of_Smell,COVID_19) --> is_symptom_of>. %0.93;0.9%
+<(*,Loss_of_Smell,COVID_19) --> is_symptom_of>. %0.93;0.9%
+<(*,Loss_of_Smell,COVID_19) --> is_symptom_of>. %0.93;0.9%
+<(*,Loss_of_Smell,COVID_19) --> is_symptom_of>. %0.93;0.9%
+5
+
+// COVID-19 treated_with Nirmatrelvir (conf=0.88, reps=7)
+<(*,COVID_19,Nirmatrelvir) --> treated_with>. %0.88;0.9%
+<(*,COVID_19,Nirmatrelvir) --> treated_with>. %0.88;0.9%
+<(*,COVID_19,Nirmatrelvir) --> treated_with>. %0.88;0.9%
+<(*,COVID_19,Nirmatrelvir) --> treated_with>. %0.88;0.9%
+<(*,COVID_19,Nirmatrelvir) --> treated_with>. %0.88;0.9%
+<(*,COVID_19,Nirmatrelvir) --> treated_with>. %0.88;0.9%
+<(*,COVID_19,Nirmatrelvir) --> treated_with>. %0.88;0.9%
+5
+
+// COVID-19 caused_by Viral_Infection (conf=0.95, reps=19)
+<(*,COVID_19,Viral_Infection) --> caused_by>. %0.95;0.9%
+<(*,COVID_19,Viral_Infection) --> caused_by>. %0.95;0.9%
+<(*,COVID_19,Viral_Infection) --> caused_by>. %0.95;0.9%
+<(*,COVID_19,Viral_Infection) --> caused_by>. %0.95;0.9%
+<(*,COVID_19,Viral_Infection) --> caused_by>. %0.95;0.9%
+<(*,COVID_19,Viral_Infection) --> caused_by>. %0.95;0.9%
+<(*,COVID_19,Viral_Infection) --> caused_by>. %0.95;0.9%
+<(*,COVID_19,Viral_Infection) --> caused_by>. %0.95;0.9%
+<(*,COVID_19,Viral_Infection) --> caused_by>. %0.95;0.9%
+<(*,COVID_19,Viral_Infection) --> caused_by>. %0.95;0.9%
+<(*,COVID_19,Viral_Infection) --> caused_by>. %0.95;0.9%
+<(*,COVID_19,Viral_Infection) --> caused_by>. %0.95;0.9%
+<(*,COVID_19,Viral_Infection) --> caused_by>. %0.95;0.9%
+<(*,COVID_19,Viral_Infection) --> caused_by>. %0.95;0.9%
+<(*,COVID_19,Viral_Infection) --> caused_by>. %0.95;0.9%
+<(*,COVID_19,Viral_Infection) --> caused_by>. %0.95;0.9%
+<(*,COVID_19,Viral_Infection) --> caused_by>. %0.95;0.9%
+<(*,COVID_19,Viral_Infection) --> caused_by>. %0.95;0.9%
+<(*,COVID_19,Viral_Infection) --> caused_by>. %0.95;0.9%
+5
+
+
+// ============================================================
+// SECTION 3: QUERIES
+// ============================================================
+
+// ============================================================
+// CONCEPT BAG QUERY BLOCK - Minimal Dataset
+// ============================================================
+
+// --- Influenza ---
+<Influenza --> ?x>?
+10
+<?x --> Influenza>?
+10
+<(*,Influenza,?x) --> ?r>?
+10
+<(*,?x,Influenza) --> ?r>?
+10
+
+// --- Pneumonia ---
+<Pneumonia --> ?x>?
+10
+<?x --> Pneumonia>?
+10
+<(*,Pneumonia,?x) --> ?r>?
+10
+<(*,?x,Pneumonia) --> ?r>?
+10
+
+// --- Migraine ---
+<Migraine --> ?x>?
+10
+<?x --> Migraine>?
+10
+<(*,Migraine,?x) --> ?r>?
+10
+<(*,?x,Migraine) --> ?r>?
+10
+
+// --- Anemia ---
+<Anemia --> ?x>?
+10
+<?x --> Anemia>?
+10
+<(*,Anemia,?x) --> ?r>?
+10
+<(*,?x,Anemia) --> ?r>?
+10
+
+// --- COVID_19 ---
+<COVID_19 --> ?x>?
+10
+<?x --> COVID_19>?
+10
+<(*,COVID_19,?x) --> ?r>?
+10
+<(*,?x,COVID_19) --> ?r>?
+10

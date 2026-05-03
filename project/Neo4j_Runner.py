@@ -6,12 +6,27 @@ from pathlib import Path
 
 def main():
 
-    bkg = BayesianKG(prior_strength=0.5, max_scale=6.0)
     neo4j = Neo4jConnection(uri="neo4j://127.0.0.1:7687", user="neo4j", password="password")
+    bkg = BayesianKG(prior_strength=0.5, max_scale=6.0)
+
+    existing_nodes = neo4j.get_all_entities()
+    existing_edges = neo4j.get_all_relations()
+    if existing_nodes and existing_edges:
+        for node in existing_nodes:
+            bkg.node_reliability[node["name"]] = (node["alpha"],node["beta"])
+        for rel in existing_edges:
+            key = (rel["subj"], rel["pred"], rel["obj"])
+            bkg.edge_beliefs[key] = (rel["alpha"],rel["beta"])
 
     BASE_DIR = Path(__file__).resolve().parent      # MAIN/project
-    csv_path = BASE_DIR.parent / "data" / "MedData.csv"  # MAIN/data/csv
+    # csv_path = BASE_DIR.parent / "data" / "MedData.csv"  # MAIN/data/csv
+    # csv_path = BASE_DIR.parent / "data" / "experiments" / "MedData_minimal_contradiction.csv"
+    csv_path = BASE_DIR.parent / "data" / "experiments" / "exp1b_reversed.csv"
     df = pd.read_csv(csv_path)
+
+    # csv_path = BASE_DIR.parent / "data" / "CN15k" / "val_decoded.tsv"
+    # df = pd.read_csv(csv_path, sep='\t')
+    # df = df[:100]
 
     for row in df.itertuples(index=False):
         subj = row.Subject
@@ -20,6 +35,7 @@ def main():
         conf = row.Confidence
 
         bkg.propagate_edge(subj, pred, obj, conf, depth=0)
+        bkg.edge_original_conf[(subj, pred, obj)] = conf
 
     for node, (a, b) in bkg.node_reliability.items():
         reliability = bkg.get_node_reliability(node)
@@ -44,7 +60,7 @@ def main():
             alpha = edge_alpha,
             beta = edge_beta,
             confidence = confidence,
-            original_confidence = df.Confidence[step] if step < len(df) else None,
+            original_confidence = bkg.edge_original_conf.get((subj, pred, obj), 0.5),
             uncertainty = uncertainty,
             color = rgb_string_to_hex(color_to_confidence(confidence))
         )

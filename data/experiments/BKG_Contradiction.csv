@@ -1,0 +1,14 @@
+﻿subj,pred,obj,alpha,beta,confidence,original_confidence,uncertainty,
+Anemia,caused_by,Iron_Deficiency,6.189412104,1.373169254,0.818425854,0.87,0.017355161,Baseline
+Influenza,treated_with,Oseltamivir,2.635258445,0.660718378,0.799537918,0.93,0.037308636,
+Fever,is_symptom_of,Influenza,2.06,0.94,0.686666667,0.78,0.053788889,
+COVID-19,caused_by,Viral_Infection,8.704952178,1.5055661,0.852547534,0.95,0.011213597,
+Migraine,treated_with,Triptans,6.638356284,1.032888123,0.865355858,0.92,0.013436952,
+Pneumonia,treated_with,Antibiotics,4.650757238,0.860053423,0.843933411,0.91,0.020229402,
+,,,,,,,,
+Anemia,caused_by,Iron_Deficiency,6.432325862,3.559393076,0.643765693,0.87,0.020864018,Partial Contradiction
+Influenza,treated_with,Oseltamivir,4.352273702,3.206661857,0.575778649,0.93,0.028538315,
+Fever,is_symptom_of,Influenza,2.568713978,2.97485591,0.463368196,0.78,0.038000375,
+COVID-19,caused_by,Viral_Infection,8.977270101,3.956427406,0.694099278,0.95,0.015238272,
+Migraine,treated_with,Triptans,7.148432807,3.073194215,0.699343929,0.92,0.018737211,
+Pneumonia,treated_with,Antibiotics,5.169769922,2.936104159,0.637780685,0.91,0.02537005,
