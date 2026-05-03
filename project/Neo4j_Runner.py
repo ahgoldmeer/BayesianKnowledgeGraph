@@ -7,11 +7,6 @@ from pathlib import Path
 def main():
 
     neo4j = Neo4jConnection(uri="neo4j://127.0.0.1:7687", user="neo4j", password="password")
-    # neo4j = Neo4jConnection(
-    #     uri="neo4j+s://dd4c53be.databases.neo4j.io",
-    #     user="dd4c53be",
-    #     password="Wf6HZUQz1XOQXA7lMpTxU0g522FZRBlR1XCArZ6ztdI"
-    # )
     bkg = BayesianKG(prior_strength=0.5, max_scale=6.0)
 
     existing_nodes = neo4j.get_all_entities()
