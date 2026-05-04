@@ -1,18 +1,21 @@
-/* Custom color overrides for Slate theme */
+---
+---
 
-/* Change header/splash background to burgundy red */
+@import "{{ site.theme }}";
+
+/* Change top splash/header background to the requested red */
 .page-header {
   background: linear-gradient(135deg, #981e32, #c92a47) !important;
   background-color: #981e32 !important;
 }
 
-/* Keep header text white for contrast */
+/* Keep header text readable over darker background */
 .page-header h1,
 .page-header p {
   color: #ffffff !important;
 }
 
-/* Update "View on GitHub" button to match slate theme colors */
+/* Match "View on GitHub" button to Slate-style teal */
 .btn {
   background: linear-gradient(180deg, #176f86, #0d5a6f) !important;
   background-color: #176f86 !important;
