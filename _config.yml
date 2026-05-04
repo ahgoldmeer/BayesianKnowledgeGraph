@@ -2,7 +2,7 @@
 plugins:
   - jekyll-remote-theme
 title: Bayesian Knowledge Graph
-description: Bayesian Knowledge Graph is a Masters Capstone Project at Temple University by Amitai Goldmeer, under the supervision of Dr. Pei Wang.
+description: Bayesian Knowledge Graph is a Masters Capstone Project at Temple University by Amitai Goldmeer, under the supervision of Dr. Pei Wang
 show_downloads: true
 
 defaults:
