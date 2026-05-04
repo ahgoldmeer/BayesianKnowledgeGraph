@@ -2,13 +2,14 @@
 ---
 $header-bg-color: #981e32;
 $header-bg-color-secondary: #c92a47;
-@import "{{ site.theme }}";
 
 /* Change top splash/header background to the requested red */
 .page-header {
   background: linear-gradient(135deg, $header-bg-color, $header-bg-color-secondary) !important;
   background-color: $header-bg-color !important;
 }
+
+@import "{{ site.theme }}";
 
 /* Keep header text readable over darker background */
 .page-header h1,
