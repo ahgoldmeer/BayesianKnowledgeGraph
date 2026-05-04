@@ -1,5 +1,12 @@
 project/__pycache__/
+
 data/edges.csv
 data/nodes.csv
 data/MedData2.csv
 data/txt
+data/general/test.csv
+
+project/test_propagation.py
+
+files/Plan.pdf
+files/BKG_Technical_Report_Old.pdf

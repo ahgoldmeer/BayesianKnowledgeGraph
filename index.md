@@ -4,7 +4,7 @@ title: Bayesian Knowledge Graph
 
 # Bayesian Knowledge Graph
 
-Bayesian Knowledge Graph explores uncertainty-aware knowledge representation by attaching confidence values to subject-predicate-object triples and updating beliefs with Bayesian-style evidence accumulation.
+ Bayesian Knowledge Graph explores uncertainty-aware knowledge representation by attaching confidence values to subject-predicate-object triples and updating beliefs with Bayesian-style evidence accumulation.
 
 ## Quick Links
 
@@ -18,10 +18,10 @@ Bayesian Knowledge Graph explores uncertainty-aware knowledge representation by 
 ## Abstract
 
  Knowledge Graphs are widely used to represent structured information, but often assume binary truth values for entities and relationships, which limits applicability for domains where uncertain data is widespread.
- 
- This project presents a Bayesian Knowledge Graph (BKG) framework which alters the traditional subject-predicate-object triple format with confidence values and applies Bayesian style belief updating to define relationship strength overtime. Utilizing alpha/beta distributed priors, the system updates and propagates node & edge confidence, edge beliefs, and node reliability as new evidence enters the system.
- 
- This framework for handling uncertain data is compared against the Non-Axiomatic Reasoning System (NARS) as an alternative system for handling uncertain data, due to its inspiration of this project, and its status as a more mature framework for handling uncertain data in practice.
+
+ This paper presents a Bayesian Knowledge Graph (BKG) framework as a Bayesian inspired approach which alters the traditional subject-predicate-object triple format with confidence values and applies Bayesian style belief updating to define relationship strength overtime. Utilizing alpha/beta distributed priors, the system updates and propagates node & edge confidence, edge beliefs, and node reliability as new evidence enters the system.
+
+ This framework for handling uncertain data is compared against the Non-Axiomatic Reasoning System (NARS) as an alternative system for handling uncertain data, due to its role as an inspiration for this project, and its status as a more mature framework for handling uncertain data in practice.
 
 ## Report
 
@@ -42,12 +42,12 @@ Bayesian Knowledge Graph explores uncertainty-aware knowledge representation by 
 
 ## Resources for Running
 
-### Neo4j
-The BKG project is natively designed to run on Neo4j, and the files listed in [Core Items](#core-items) will work 'out of the box' with a self-hosted Neo4j instance. Other graph databases that utilize Cypher may work, however there is no guarantee. Neo4j can be run [locally](https://neo4j.com/download/) which is how the current authentication in [Neo4j runner](https://github.com/ahgoldmeer/BayesianKnowledgeGraph/tree/main/project/Neo4j_Runner.py) is set up. Neo4j's free cloud instance ([Neo4j Aura](https://login.neo4j.com/u/signup/identifier?state=hKFo2SBHTDhQVlI3aFZCaHI2WlJZUWtTRVBMcm5aQnRqMFBmWaFur3VuaXZlcnNhbC1sb2dpbqN0aWTZIFFvUEQ5aEZnR2RmN3FsSHhEVlJXa1dxTUktd2J5Ykhyo2NpZNkgRXZ2MmNjWFBjOHVPeGV3bzBJalkyMFlJckg3VmtKVzk)) can be utilized as well, however the Neo4jConnection instance in the Neo4j runner will need to be updated. Formatted csv files for the CN15k dataset and mocked medical dataset are available in the [data section](#data-and-experiments).
+ ### Neo4j
+  The BKG project is natively designed to run on Neo4j, and the files listed in [Core Items](#core-items) will work 'out of the box' with a self-hosted Neo4j instance. Other graph databases that utilize Cypher may work, however there is no guarantee. Neo4j can be run [locally](https://neo4j.com/download/) which is how the current authentication in [Neo4j runner](https://github.com/ahgoldmeer/BayesianKnowledgeGraph/tree/main/project/Neo4j_Runner.py) is set up. Neo4j's free cloud instance ([Neo4j Aura](https://login.neo4j.com/u/signup/identifier?state=hKFo2SBHTDhQVlI3aFZCaHI2WlJZUWtTRVBMcm5aQnRqMFBmWaFur3VuaXZlcnNhbC1sb2dpbqN0aWTZIFFvUEQ5aEZnR2RmN3FsSHhEVlJXa1dxTUktd2J5Ykhyo2NpZNkgRXZ2MmNjWFBjOHVPeGV3bzBJalkyMFlJckg3VmtKVzk)) can be utilized as well, however the Neo4jConnection instance in the Neo4j runner will need to be updated. Formatted csv files for the CN15k dataset and mocked medical dataset are available in the [data section](#data-and-experiments).
 
-### OpenNars
+ ### OpenNars
 
-The OpenNars version used for comparative analysis in this project was [OpenNARS 3.1.2](https://github.com/opennars/opennars_v3.1.2). Build instructions are inside the README file. Usable .nal files for pre-loading are available in the [data section](#data-and-experiments).
+  The OpenNars version used for comparative analysis in this project was [OpenNARS 3.1.2](https://github.com/opennars/opennars_v3.1.2). Build instructions are inside the README file. Usable .nal files for pre-loading are available in the [data section](#data-and-experiments).
 
 <!-- ## Repository Layout
 

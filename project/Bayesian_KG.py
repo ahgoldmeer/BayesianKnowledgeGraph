@@ -19,7 +19,7 @@ class BayesianKG:
         self.edge_original_conf = {} # Store original confidence from CSV for reference --> (subj, pred, obj) --> conf
 
     def get_evidence_scale(self, node_weight): # No static amplifier --> Dynamic amplification with max change resistance
-        """Evidence scale is a hyperparameter that determines how much a belief should shift given new observations."""
+        #Evidence scale is a hyperparameter that determines how much a belief should shift given new observations.
         scale = (self.max_scale * node_weight)/(1 + node_weight)
         return scale
 
@@ -89,18 +89,15 @@ class BayesianKG:
 
         return alpha / (alpha + beta)
     
-    '''
-    Use neighbors of given object to recursively propagate confidence updates.
-    This allows new evidence to influence related edges, with diminishing impact as we go further out.
-
-    Infer confidence for neighbor edges based on existing beliefs
-
-    'The recursive propagation in propagate_edge can create infinite loops if the graph contains cycles. 
-    While max_depth provides some protection, a cycle of length less than max_depth (default 5) will still 
-    cause the same edge to be updated multiple times in a single propagation. Consider tracking visited edges 
-    during a propagation to prevent revisiting the same edge in a single call chain.'
+    """
+    Use neighbors of given object to recursively propagate confidence updates --> allows new evidence to influence related edges, with diminishing impact as we go further out.
     
-    '''
+    Infer confidence for neighbor edges based on existing beliefs
+    Recursive propagation can create infinite loops if the graph contains cycles. 
+
+    While max_depth provides some protection, a cycle of length less than max_depth (default 5) will still 
+    cause the same edge to be updated multiple times in a single propagation --> track visited edges in future?
+    """
     def propagate_edge(self, subj, pred, obj, confidence, depth=0, visited=None):
         if visited is None:
             visited = set()
@@ -133,7 +130,11 @@ class BayesianKG:
         if not confidences:
             return 0.5
         return sum(confidences) / len(confidences)
-
+    
+"""
+Utility functions for color based on confidence. 
+No longer works w/ Neo4j but left as artifact if Neo4j ever lets you use custom colors
+"""
 def color_to_confidence(conf):
     norm_conf = (conf - 0.3) / (1.0 - 0.3)
     norm_conf = max(0, min(1, norm_conf))
