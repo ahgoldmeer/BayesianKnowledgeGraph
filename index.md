@@ -42,10 +42,11 @@ title: Bayesian Knowledge Graph
 
 ## Resources for Running
 
- ### Neo4j
-  The BKG project is natively designed to run on Neo4j, and the files listed in [Core Items](#core-items) will work 'out of the box' with a self-hosted Neo4j instance. Other graph databases that utilize Cypher may work, however there is no guarantee. Neo4j can be run [locally](https://neo4j.com/download/) which is how the current authentication in [Neo4j runner](https://github.com/ahgoldmeer/BayesianKnowledgeGraph/tree/main/project/Neo4j_Runner.py) is set up. Neo4j's free cloud instance ([Neo4j Aura](https://login.neo4j.com/u/signup/identifier?state=hKFo2SBHTDhQVlI3aFZCaHI2WlJZUWtTRVBMcm5aQnRqMFBmWaFur3VuaXZlcnNhbC1sb2dpbqN0aWTZIFFvUEQ5aEZnR2RmN3FsSHhEVlJXa1dxTUktd2J5Ykhyo2NpZNkgRXZ2MmNjWFBjOHVPeGV3bzBJalkyMFlJckg3VmtKVzk)) can be utilized as well, however the Neo4jConnection instance in the Neo4j runner will need to be updated. Formatted csv files for the CN15k dataset and mocked medical dataset are available in the [data section](#data-and-experiments).
+ **Neo4j**
+ 
+ The BKG project is natively designed to run on Neo4j, and the files listed in [Core Items](#core-items) will work 'out of the box' with a self-hosted Neo4j instance. Other graph databases that utilize Cypher may work, however there is no guarantee. Neo4j can be run [locally](https://neo4j.com/download/) which is how the current authentication in [Neo4j runner](https://github.com/ahgoldmeer/BayesianKnowledgeGraph/tree/main/project/Neo4j_Runner.py) is set up. Neo4j's free cloud instance ([Neo4j Aura](https://login.neo4j.com/u/signup/identifier?state=hKFo2SBHTDhQVlI3aFZCaHI2WlJZUWtTRVBMcm5aQnRqMFBmWaFur3VuaXZlcnNhbC1sb2dpbqN0aWTZIFFvUEQ5aEZnR2RmN3FsSHhEVlJXa1dxTUktd2J5Ykhyo2NpZNkgRXZ2MmNjWFBjOHVPeGV3bzBJalkyMFlJckg3VmtKVzk)) can be utilized as well, however the Neo4jConnection instance in the Neo4j runner will need to be updated. Formatted csv files for the CN15k dataset and mocked medical dataset are available in the [data section](#data-and-experiments).
 
- ### OpenNars
+ **OpenNars**
 
   The OpenNars version used for comparative analysis in this project was [OpenNARS 3.1.2](https://github.com/opennars/opennars_v3.1.2). Build instructions are inside the README file. Usable .nal files for pre-loading are available in the [data section](#data-and-experiments).
 
